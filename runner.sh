@@ -17,4 +17,4 @@
 module load cuda/10.2
 
 ## run actual trainer
-$1 $2 -data /cbica/home/patis/comp_space/testing/gandlf_mine_refactor/exp_ventricle/data.csv -config $3 -o $4 -train 1 -device cuda -reset_prev True
+$1 $2 -data /cbica/home/patis/comp_space/testing/gandlf_mine_refactor/exp_ventricle/data.csv -config $3 -o $4 -train 1 -device cuda -reset_prv True
