@@ -13,6 +13,11 @@
 ### $3: yaml configuration
 ### $4: output_dir (relative to cwd)
 
+# get free cuda device
+# MB was stating at some point that might _might_ not be needed.
+CUDA_VISIBLE_DEVICES=`get_CUDA_VISIBLE_DEVICES` || exit
+export CUDA_VISIBLE_DEVICES
+
 #module unload cuda/9.2
 module load cuda/10.2
 
