@@ -10,6 +10,7 @@
 # ref: https://sbia-wiki.uphs.upenn.edu/wiki/index.php/GPU_Computing#Directing_Jobs_to_a_Specific_GPU_with_the_get_CUDA_VISIBLE_DEVICES_Utility
 ### $1: absolute path to python interpreter in virtual environment
 ### $2: absolute path to gandlf_run that needs to be invoked
+### $3: absolute path to the data.csv file
 ### $3: yaml configuration
 ### $4: output_dir (relative to cwd)
 
@@ -22,4 +23,4 @@ export CUDA_VISIBLE_DEVICES
 module load cuda/10.2
 
 ## run actual trainer
-$1 $2 -data /cbica/home/patis/comp_space/testing/gandlf_mine_refactor/exp_ventricle/data.csv -config $3 -o $4 -train 1 -device cuda -reset_prv True
+$1 $2 -data $3 -config $3 -o $4 -train 1 -device cuda -reset_prv True
