@@ -9,14 +9,14 @@ do
     # # debugging
     echo "f=$f"
     echo "d=$d" 
-    # # delete information from previous run(s) -- optional but recommended
-    # rm -rf $config/*
-    # rm -rf *.e*
-    # rm -rf *.o*
-    # rm -rf *.pe*
-    # rm -rf *.po*
-    # mkdir -p $config
-    qsub -N L_$config ../runner.sh /cbica/home/patis/comp_space/testing/gandlf_mine/venv_10.2/bin/python /cbica/home/patis/comp_space/testing/gandlf_mine_refactor/gandlf_run $f $d 
+    # # delete information from previous run(s) -- optional but 
+    mkdir -p $config
+    rm -rf $config/*
+    rm -rf *.e*
+    rm -rf *.o*
+    rm -rf *.pe*
+    rm -rf *.po*
+    qsub -N L_$config ../runner.sh /cbica/home/patis/comp_space/testing/gandlf_mine/venv_10.2/bin/python /cbica/home/patis/comp_space/testing/gandlf_mine_refactor/gandlf_run $f $config
   done
   cd ..
 done
