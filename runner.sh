@@ -11,8 +11,8 @@
 ### $1: absolute path to python interpreter in virtual environment
 ### $2: absolute path to gandlf_run that needs to be invoked
 ### $3: absolute path to the data.csv file
-### $3: yaml configuration
-### $4: output_dir (relative to cwd)
+### $4: yaml configuration
+### $5: output_dir (relative to cwd)
 
 # get free cuda device
 # MB was stating at some point that might _might_ not be needed.
