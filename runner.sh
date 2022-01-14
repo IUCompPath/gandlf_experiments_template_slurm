@@ -23,4 +23,10 @@ export CUDA_VISIBLE_DEVICES
 module load cuda/10.2
 
 ## run actual trainer
-$1 $2 -data $3 -config $4 -o $5 -train True -device cuda -reset_prv True
+$1 $2 \
+--inputdata $3 \
+--config $4 \
+--modeldir $5 \
+--train True \
+--device cuda \
+--resetprev True # this removes previously saved checkpoints and data
