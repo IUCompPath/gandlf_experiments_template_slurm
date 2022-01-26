@@ -4,18 +4,30 @@ This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA
 
 # Configurations
 
-Weighted loss: True
+All configuration options can be changed depending on the experiment at hand. These are just some examples for illustration.
+## Common
 
-Optimizer configurations:
+These options are common for all and do not change. For example, the following are always set for this template:
 
-- A: adam, 128,128,128
-- B: sgd, 128,128,128
-- C: adam, 64**3
-- D: sgd, 64**3
+- Weighted loss: True
+- Augmentation configurations:
+  - higher prob: affine, noise, Bias
+  - lower prob: blur, rotations, flip, anisotropic
 
-Augmentation configurations:
-- higher prob: affine, noise, Bias
-- lower prob: blur, rotations, flip, anisotropic
+## Top-level configurations
+
+These are defined by the top-level folders.
+
+| Folder | Optimizer | Patch_Size |
+|:------:|:---------:|:----------:|
+|    A   |    adam   |   128**3   |
+|    B   |    sgd    |   128**3   |
+|    C   |    adam   |    64**3   |
+|    D   |    sgd    |    64**3   |
+
+## Lower-level configurations
+
+These are defined by the lower-level numerical configs.
 
 | Config |  Loss  |     Scheduler     | Learning Rate |
 |:------:|:------:|:-----------------:|:-------------:|
