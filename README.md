@@ -9,6 +9,7 @@ All configuration options can be changed depending on the experiment at hand. Th
 
 These options are common for all and do not change. For example, the following are always set for this template:
 
+- Loss function: dc_log
 - Weighted loss: True
 - Augmentation configurations:
   - higher prob: affine, noise, Bias
@@ -29,14 +30,14 @@ These are defined by the top-level folders.
 
 These are defined by the lower-level numerical configs.
 
-| Config |  Loss  |     Scheduler     | Learning Rate |
-|:------:|:------:|:-----------------:|:-------------:|
-|    0   | dc_log | triangle_modified |      0.1      |
-|    1   | dc_log |  cosineannealing  |      0.1      |
-|    2   | dc_log | triangle_modified |      0.5      |
-|    3   | dc_log |  cosineannealing  |      0.5      |
-|    4   | dc_log | triangle_modified |      1.0      |
-|    5   | dc_log |  cosineannealing  |      1.0      |
+| Config |     Scheduler     | Learning Rate |
+|:------:|:-----------------:|:-------------:|
+|    0   | triangle_modified |      0.1      |
+|    1   |  cosineannealing  |      0.1      |
+|    2   | triangle_modified |      0.5      |
+|    3   |  cosineannealing  |      0.5      |
+|    4   | triangle_modified |      1.0      |
+|    5   |  cosineannealing  |      1.0      |
 
 
 # How-to
