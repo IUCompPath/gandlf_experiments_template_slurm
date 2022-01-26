@@ -16,7 +16,7 @@ do
     rm -rf *.o*
     rm -rf *.pe*
     rm -rf *.po*
-    qsub -N L_$config ../runner.sh /cbica/home/patis/comp_space/testing/gandlf_mine/venv_10.2/bin/python /cbica/home/patis/comp_space/testing/gandlf_mine_refactor/gandlf_run /cbica/home/patis/comp_space/testing/gandlf_mine_refactor/exp_ventricle/data.csv $f $config
+    qsub -N L_$config ../runner.sh /cbica/comp_space/patis/testing/gandlf_mine/venv11/bin/python /cbica/home/patis/comp_space/testing/gandlf_mine/gandlf_run ../data.csv $f $config
   done
   cd ..
 done

@@ -20,7 +20,7 @@ CUDA_VISIBLE_DEVICES=`get_CUDA_VISIBLE_DEVICES` || exit
 export CUDA_VISIBLE_DEVICES
 
 #module unload cuda/9.2
-module load cuda/10.2
+module load cuda/11.2
 
 ## run actual trainer
 $1 $2 \
