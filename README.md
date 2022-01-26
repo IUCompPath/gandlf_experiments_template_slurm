@@ -25,3 +25,12 @@ Augmentation configurations:
 |    3   | dc_log |  cosineannealing  |      0.5      |
 |    4   | dc_log | triangle_modified |      1.0      |
 |    5   | dc_log |  cosineannealing  |      1.0      |
+
+
+# How-to
+
+- Use this repo as template to create a new **PRIVATE** repo.
+- Update email address in `runner.sh` for notifications.
+- Update common config properties as needed.
+- Edit the `data.csv` file to fill in updated data list (channel list should not matter as long as it is consistent). Ensure you have read access to the data.
+- Run `sh ./submitter.sh` to submit the experiments.
