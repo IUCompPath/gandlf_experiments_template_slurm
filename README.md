@@ -59,11 +59,11 @@ optional arguments:
   -g , --gandlfrun      'gandlf_run' script to be called.
   -d , --datafile       'data.csv' script to be called.
   -r , --runnerscript   'runner.sh' script to be called.
+  -e , --email          Email address to be used for notifications.
 ```
 
 - All parameters have _some_ defaults, and should be changed based on the experiment at hand.
 - Use this repo as template to create a new **PRIVATE** repo.
-- Update email address in `runner.sh` for notifications.
 - Update common config properties as needed.
 - Edit the `data.csv` file to fill in updated data list (channel list should not matter as long as it is consistent). Ensure you have read access to the data.
-- Run `python ./submitter.py` to submit the experiments.
+- Run `python ./submitter.py` with correct options (**OR** change the defaults - whatever is easier) to submit the experiments.
