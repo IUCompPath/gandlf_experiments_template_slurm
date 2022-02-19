@@ -21,7 +21,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog="GANDLF_Experiment_Submitter",
         formatter_class=argparse.RawTextHelpFormatter,
-        description="Submit GaNDLF experiments on CUBIC Cluster.\n\n" + copyrightMessage,
+        description="Submit GaNDLF experiments on CUBIC Cluster.\n\n"
+        + copyrightMessage,
     )
 
     parser.add_argument(
@@ -65,12 +66,18 @@ if __name__ == "__main__":
         current_file_or_folder = os.path.join(cwd, file_or_folder)
         if os.path.isdir(current_file_or_folder):
             print("*****Folder: " + file_or_folder)
-            os.chdir(current_file_or_folder) # change cwd so that logs are generated in single place
+            os.chdir(
+                current_file_or_folder
+            )  # change cwd so that logs are generated in single place
             files_and_folders_inside = os.listdir(current_file_or_folder)
             for internal_file_or_folder in files_and_folders_inside:
                 # only loop over configs
-                if internal_file_or_folder.endswith(".yaml") or internal_file_or_folder.endswith(".yml"):
-                    current_config = os.path.join(current_file_or_folder, internal_file_or_folder)
+                if internal_file_or_folder.endswith(
+                    ".yaml"
+                ) or internal_file_or_folder.endswith(".yml"):
+                    current_config = os.path.join(
+                        current_file_or_folder, internal_file_or_folder
+                    )
                     config, _ = os.path.splitext(internal_file_or_folder)
                     output_dir = os.path.join(current_file_or_folder, config)
                     # delete previous results and logs
@@ -78,6 +85,23 @@ if __name__ == "__main__":
                         shutil.rmtree(output_dir)
                     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-                    command = "qsub -N L_" + file_or_folder + "_" + config + " " + args.runnerscript + " " + args.interpreter + " " + args.gandlfrun + " " + args.datafile + " " + current_config + " " + output_dir
+                    command = (
+                        "qsub -N L_"
+                        + file_or_folder
+                        + "_"
+                        + config
+                        + " "
+                        + args.runnerscript
+                        + " "
+                        + args.interpreter
+                        + " "
+                        + args.gandlfrun
+                        + " "
+                        + args.datafile
+                        + " "
+                        + current_config
+                        + " "
+                        + output_dir
+                    )
                     print(command)
                     os.system(command)
