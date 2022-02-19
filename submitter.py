@@ -14,6 +14,7 @@ gandlf_run = "/cbica/home/patis/comp_space/testing/gandlf_mine/gandlf_run"
 for file_or_folder in all_files_and_folders:
     current_file_or_folder = os.path.join(cwd, file_or_folder)
     if os.path.isdir(current_file_or_folder):
+        print("Folder: " + file_or_folder)
         os.chdir(current_file_or_folder) # change cwd so that logs are generated in single place
         files_and_folders_inside = os.listdir(current_file_or_folder)
         for internal_file_or_folder in files_and_folders_inside:
@@ -27,7 +28,4 @@ for file_or_folder in all_files_and_folders:
                     shutil.rmtree(output_dir)
                 Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-                command = "qsub -N L_" + file_or_folder + "_" + config + " " + runner_file + " " + python_interpreter + " " + gandlf_run + " " + data_file + " " + current_config + " " + output_dir
-                print(command)
-
-                # os.system("qsub -N L_" + file_or_folder + "_" + config + " " + runner_file + " " + python_interpreter + " " + gandlf_run + " " + data_file + " " + current_config + " " + output_dir)
+                os.system("qsub -N L_" + file_or_folder + "_" + config + " " + runner_file + " " + python_interpreter + " " + gandlf_run + " " + data_file + " " + current_config + " " + output_dir)
