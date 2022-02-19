@@ -5,6 +5,8 @@
 #$ -pe threaded 10 ## change number of CPU threads you want to request here
 #$ -cwd
 #$ -M user@upenn.edu ## change email
+#$ -m b 
+#$ -m e 
 # this file is used to run gpu jobs on the cluster in a proper manner so 
 # that the CUDA_VISIBLE_DEVICES environment variable is properly initialized
 # ref: https://sbia-wiki.uphs.upenn.edu/wiki/index.php/GPU_Computing#Directing_Jobs_to_a_Specific_GPU_with_the_get_CUDA_VISIBLE_DEVICES_Utility
