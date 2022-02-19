@@ -40,10 +40,30 @@ These are defined by the lower-level numerical configs.
 |    5   |  cosineannealing  |      1.0      |
 
 
-# How-to
+# Usage
 
+```bash
+python submitter.py -h
+usage: GANDLF_Experiment_Submitter [-h] [-i] [-g] [-d] [-r]
+
+Submit GaNDLF experiments on CUBIC Cluster.
+
+Contact: software@cbica.upenn.edu
+
+This program is NOT FDA/CE approved and NOT intended for clinical use.
+Copyright (c) 2022 University of Pennsylvania. All rights reserved.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i , --interpreter    Python interpreter to be called.
+  -g , --gandlfrun      'gandlf_run' script to be called.
+  -d , --datafile       'data.csv' script to be called.
+  -r , --runnerscript   'runner.sh' script to be called.
+```
+
+- All parameters have _some_ defaults, and should be changed based on the experiment at hand.
 - Use this repo as template to create a new **PRIVATE** repo.
 - Update email address in `runner.sh` for notifications.
 - Update common config properties as needed.
 - Edit the `data.csv` file to fill in updated data list (channel list should not matter as long as it is consistent). Ensure you have read access to the data.
-- Run `sh ./submitter.sh` to submit the experiments.
+- Run `python ./submitter.py` to submit the experiments.
