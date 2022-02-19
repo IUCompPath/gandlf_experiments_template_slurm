@@ -4,7 +4,7 @@
 ##$ -N JOB_NAME_GOES_HERE
 #$ -pe threaded 10 ## change number of CPU threads you want to request here
 #$ -cwd
-#$ -M user@upenn.edu ## change email
+###$ -M user@upenn.edu ## change email
 #$ -m b 
 #$ -m e 
 # this file is used to run gpu jobs on the cluster in a proper manner so 
