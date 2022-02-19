@@ -57,6 +57,14 @@ if __name__ == "__main__":
         type=str,
         help="'runner.sh' script to be called.",
     )
+    parser.add_argument(
+        "-e",
+        "--email",
+        metavar="",
+        default="USER@UPENN.EDU",
+        type=str,
+        help="Email address to be used for notifications.",
+    )
 
     args = parser.parse_args()
 
@@ -90,6 +98,8 @@ if __name__ == "__main__":
                         + file_or_folder
                         + "_"
                         + config
+                        + " -M "
+                        + args.email
                         + " "
                         + args.runnerscript
                         + " "
