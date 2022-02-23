@@ -4,6 +4,7 @@ This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA
 
 # Pre-requisites
 
+- This repo will allow you to submit **multiple** GPU jobs on the cluster, which gives you great power; and you know [what comes with that](https://memegenerator.net/img/instances/10306177/with-great-power-comes-great-responsibility-albus-dumbledore.jpg). If Mark's wrath falls upon you, you are on your own.
 - Be intimately familiar with the data you are going to use.
 - Be familiar with [GaNDLF's usage](https://cbica.github.io/GaNDLF/usage), and try to do a single epoch training on [the toy dataset](https://cbica.github.io/GaNDLF/usage#examples).
 - You have [installed GaNDLF](https://cbica.github.io/GaNDLF/setup) on your home directory or comp_space.
