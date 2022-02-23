@@ -31,7 +31,7 @@ if __name__ == "__main__":
         metavar="",
         default="/cbica/comp_space/patis/testing/gandlf_mine/venv11/bin/python",
         type=str,
-        help="Python interpreter to be called.",
+        help="Full path of python interpreter to be called.",
     )
     parser.add_argument(
         "-g",
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         metavar="",
         default="/cbica/home/patis/comp_space/testing/gandlf_mine/gandlf_run",
         type=str,
-        help="'gandlf_run' script to be called.",
+        help="Full path of 'gandlf_run' script to be called.",
     )
     parser.add_argument(
         "-d",
@@ -47,7 +47,7 @@ if __name__ == "__main__":
         metavar="",
         default=os.path.join(cwd, "data.csv"),
         type=str,
-        help="'data.csv' script to be called.",
+        help="Full path to 'data.csv'.",
     )
     parser.add_argument(
         "-r",

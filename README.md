@@ -55,9 +55,9 @@ Copyright (c) 2022 University of Pennsylvania. All rights reserved.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -i , --interpreter    Python interpreter to be called.
-  -g , --gandlfrun      'gandlf_run' script to be called.
-  -d , --datafile       'data.csv' script to be called.
+  -i , --interpreter    Full path of python interpreter to be called. 
+  -g , --gandlfrun      Full path of 'gandlf_run' script to be called.
+  -d , --datafile       Full path to 'data.csv'.
   -r , --runnerscript   'runner.sh' script to be called.
   -e , --email          Email address to be used for notifications.
 ```
