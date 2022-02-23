@@ -1,10 +1,9 @@
 #! /bin/bash
 #$ -l h_vmem=100G ## amout RAM being requested
-#$ -l gpu
-##$ -N JOB_NAME_GOES_HERE
+#$ -l gpu # request the more common P100 nodes
+##$ -l A40 # to request the less common A40 nodes
 #$ -pe threaded 10 ## change number of CPU threads you want to request here
 #$ -cwd
-###$ -M user@upenn.edu ## change email
 #$ -m b 
 #$ -m e 
 # this file is used to run gpu jobs on the cluster in a proper manner so 
