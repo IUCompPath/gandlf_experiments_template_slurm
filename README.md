@@ -1,8 +1,8 @@
-# gandlf_experiments_template
+# GaNDLF Experiments Template
 
 This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the UPenn CUBIC cluster.
 
-# Pre-requisites
+## Pre-requisites
 
 - This repo will allow you to submit **multiple** GPU jobs on the cluster, which gives you great power; and you know [what comes with that](https://memegenerator.net/img/instances/10306177/with-great-power-comes-great-responsibility-albus-dumbledore.jpg). If Mark's wrath falls upon you, you are on your own.
 - Be intimately familiar with the data you are going to use.
@@ -10,10 +10,10 @@ This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA
 - You have [installed GaNDLF](https://cbica.github.io/GaNDLF/setup) on your home directory or comp_space.
 - You have run a single epoch of the GaNDLF training loop (training and validation) using your own data _somewhere_ (either CUBIC cluster or own machine - doesn't matter), so that you know how to [customize the configuration](https://cbica.github.io/GaNDLF/usage#customize-the-training).
 
-# Configurations
+## Configurations
 
 All configuration options can be changed depending on the experiment at hand. These are just some examples for illustration.
-## Common
+### Common
 
 These options are common for all and do not change. For example, the following are always set for this template:
 
@@ -23,7 +23,7 @@ These options are common for all and do not change. For example, the following a
   - higher prob: affine, noise, Bias
   - lower prob: blur, rotations, flip, anisotropic
 
-## Top-level configurations
+### Top-level configurations
 
 These are defined by the top-level folders.
 
@@ -34,7 +34,7 @@ These are defined by the top-level folders.
 |    C   |    adam   |    64**3   |
 |    D   |    sgd    |    64**3   |
 
-## Lower-level configurations
+### Lower-level configurations
 
 These are defined by the lower-level numerical configs.
 
@@ -48,7 +48,7 @@ These are defined by the lower-level numerical configs.
 |    5   |  cosineannealing  |      1.0      |
 
 
-# Usage
+## Usage
 
 ```bash
 python submitter.py -h
