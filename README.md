@@ -2,6 +2,13 @@
 
 This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the UPenn CUBIC cluster.
 
+# Pre-requisites
+
+- Be intimately familiar with the data you are going to use.
+- Be familiar with [GaNDLF's usage](https://cbica.github.io/GaNDLF/usage), and try to do a single epoch training on [the toy dataset](https://cbica.github.io/GaNDLF/usage#examples).
+- You have [installed GaNDLF](https://cbica.github.io/GaNDLF/setup) on your home directory or comp_space.
+- You have run a single epoch of the GaNDLF training loop (training and validation) using your own data _somewhere_ (either CUBIC cluster or own machine - doesn't matter), so that you know how to [customize the configuration](https://cbica.github.io/GaNDLF/usage#customize-the-training).
+
 # Configurations
 
 All configuration options can be changed depending on the experiment at hand. These are just some examples for illustration.
