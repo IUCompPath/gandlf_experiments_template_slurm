@@ -2,6 +2,7 @@
 #$ -l h_vmem=100G ## amout RAM being requested
 #$ -l gpu # request the more common P100 nodes
 ##$ -l A40 # to request the less common A40 nodes
+## more details in https://sbia-wiki.uphs.upenn.edu/wiki/index.php/GPU_Computing
 #$ -pe threaded 10 ## change number of CPU threads you want to request here
 #$ -cwd
 #$ -m b 
