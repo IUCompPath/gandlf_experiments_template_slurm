@@ -65,6 +65,14 @@ if __name__ == "__main__":
         type=str,
         help="Email address to be used for notifications.",
     )
+    parser.add_argument(
+        "-gpu",
+        "--gputype",
+        metavar="",
+        default="gpu",
+        type=str,
+        help="The parameter to pass after '-l' to the submit command.",
+    )
 
     args = parser.parse_args()
 
@@ -110,6 +118,8 @@ if __name__ == "__main__":
                             + config
                             + " -M "
                             + args.email
+                            + " -l "
+                            + args.gputype
                             + " "
                             + args.runnerscript
                             + " "
