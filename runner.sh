@@ -31,4 +31,4 @@ $1 $2 \
 --modeldir $5 \
 --train True \
 --device cuda \
---resetprev True # this removes previously saved checkpoints and data
+--reset True # this removes previously saved checkpoints and data
