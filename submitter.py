@@ -61,7 +61,7 @@ if __name__ == "__main__":
         "-e",
         "--email",
         metavar="",
-        default="USER@UPENN.EDU",
+        default="user -at- site.domain",
         type=str,
         help="Email address to be used for notifications.",
     )
