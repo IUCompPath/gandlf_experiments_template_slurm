@@ -81,7 +81,7 @@ if __name__ == "__main__":
     for file_or_folder in all_files_and_folders:
         current_file_or_folder = os.path.join(cwd, file_or_folder)
         if os.path.isdir(current_file_or_folder):
-            if not(".git" in file_or_folder):
+            if file_or_folder is not ".git":
                 print("*****Folder: " + file_or_folder)
                 # change cwd so that logs are generated in single place
                 os.chdir(
@@ -92,8 +92,9 @@ if __name__ == "__main__":
                 ### delete previous results
                 for internal_file_or_folder in files_and_folders_inside:
                     current_internal_file = os.path.join(current_file_or_folder, internal_file_or_folder)
-                    if os.path.isdir(current_internal_file):
-                        shutil.rmtree(current_internal_file)
+                    if internal_file_or_folder is not ".git":
+                        if os.path.isdir(current_internal_file):
+                            shutil.rmtree(current_internal_file)
                 ### delete previous results
                 
                 for internal_file_or_folder in files_and_folders_inside:
