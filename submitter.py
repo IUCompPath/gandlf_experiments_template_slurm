@@ -87,16 +87,6 @@ if __name__ == "__main__":
                 files_and_folders_inside = os.listdir(current_file_or_folder)
                 files_and_folders_inside.sort()
 
-                ### delete previous results
-                for internal_file_or_folder in files_and_folders_inside:
-                    current_internal_file = os.path.join(
-                        current_file_or_folder, internal_file_or_folder
-                    )
-                    if internal_file_or_folder != ".git":
-                        if os.path.isdir(current_internal_file):
-                            shutil.rmtree(current_internal_file)
-                ### delete previous results
-
                 for internal_file_or_folder in files_and_folders_inside:
                     # only loop over configs
                     if internal_file_or_folder.endswith(
