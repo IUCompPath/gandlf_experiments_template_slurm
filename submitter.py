@@ -76,6 +76,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    all_files_and_folders.sort()
     for file_or_folder in all_files_and_folders:
         current_file_or_folder = os.path.join(cwd, file_or_folder)
         if os.path.isdir(current_file_or_folder):
@@ -84,6 +85,7 @@ if __name__ == "__main__":
                 # change cwd so that logs are generated in single place
                 os.chdir(current_file_or_folder)
                 files_and_folders_inside = os.listdir(current_file_or_folder)
+                files_and_folders_inside.sort()
 
                 ### delete previous results
                 for internal_file_or_folder in files_and_folders_inside:
