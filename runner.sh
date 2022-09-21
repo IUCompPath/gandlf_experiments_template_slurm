@@ -15,12 +15,15 @@
 ### $3: absolute path to the data.csv file
 ### $4: yaml configuration
 ### $5: output_dir (relative to cwd)
+### $6: folder to copy to scratch space
 
-## run actual trainer
-$1 $2 \
---inputdata $3 \
---config $4 \
---modeldir $5 \
---train True \
---device cuda \
---reset True # this removes previously saved checkpoints and data
+$1 ./tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
+
+# ## run actual trainer
+# $1 $2 \
+# --inputdata $3 \
+# --config $4 \
+# --modeldir $5 \
+# --train True \
+# --device cuda \
+# --reset True # this removes previously saved checkpoints and data
