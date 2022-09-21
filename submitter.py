@@ -1,10 +1,9 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, shutil, argparse, fileinput
+import os, shutil, argparse
 from datetime import date
 from pathlib import Path
-from distutils.dir_util import copy_tree
 
 
 # main function
@@ -85,30 +84,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    ## special check for $CBICA_TMPDIR
-    tempdir = None
-    if "CBICA_TMPDIR" in os.environ:
-        tempdir = os.environ["CBICA_TMPDIR"]
-        if args.foldertocopy is not None:
-            print("Copying data folder to $CBICA_TMPDIR.")
-            new_data_dir = os.path.join(tempdir, "data")
-            copy_tree(args.foldertocopy, new_data_dir)
-
-            print("Updating paths in csv files.")
-            data_files_to_replace_path = args.datafile.split(",")
-            new_data_files = ""
-            for data_file in data_files_to_replace_path:
-                new_data_filename = os.path.join(tempdir, os.path.basename(data_file))
-                new_data_files = new_data_filename + ","
-                with open(data_file, "r") as f:
-                    lines = f.readlines()
-                with open(new_data_filename, "w") as f:
-                    for line in lines:
-                        line = line.replace(args.foldertocopy, new_data_dir)
-                        f.write(line)
-
-            args.datafile = new_data_files[:-1]
-
     all_files_and_folders.sort()
     for file_or_folder in all_files_and_folders:
         current_file_or_folder = os.path.join(cwd, file_or_folder)
@@ -156,6 +131,8 @@ if __name__ == "__main__":
                             + current_config
                             + " "
                             + output_dir
+                            + " "
+                            + args.foldertocopy
                         )
                         print(command)
                         os.system(command)
