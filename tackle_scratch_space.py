@@ -1,4 +1,4 @@
-import os, sys, argparse, fileinput
+import os, sys, argparse, shutil
 from datetime import date
 from distutils.dir_util import copy_tree
 
@@ -71,9 +71,11 @@ if __name__ == "__main__":
             print("Updating paths in csv files.")
             data_files_to_replace_path = args.datafile.split(",")
             new_data_files = ""
+            new_data_files_to_delete = []
             for data_file in data_files_to_replace_path:
                 new_data_filename = os.path.join(tempdir, os.path.basename(data_file))
                 new_data_files = new_data_filename + ","
+                new_data_files_to_delete.append(new_data_filename)
                 with open(data_file, "r") as f:
                     lines = f.readlines()
                 with open(new_data_filename, "w") as f:
@@ -97,3 +99,8 @@ if __name__ == "__main__":
     )
     print("Running command: " + command_to_run)
     os.system(command_to_run)
+
+    if tempdir is not None:
+        shutil.rmtree(new_data_dir)
+        for data_file in new_data_files_to_delete:
+            os.remove(data_file)
