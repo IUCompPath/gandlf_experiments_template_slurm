@@ -12,7 +12,9 @@ This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA
 
 ## Configurations
 
-All configuration options can be changed depending on the experiment at hand. These are just some examples for illustration.
+All configuration options can be changed depending on the experiment at hand. 
+
+In the file [`config_generator.py`](./config_generator.py)
 ### Common
 
 These options are common for all and do not change. For example, the following are always set for this template:
