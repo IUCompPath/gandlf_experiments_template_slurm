@@ -33,7 +33,7 @@ if __name__ == "__main__":
         ## make sure you have a baseline configuration somewhere
         base_config = os.path.join(cwd, "config.yaml")
 
-
+    #### update configurations to be trained
     ### this example is to generate multiple configs based on schedulers and learning rates
     # learning_rates = [0.1, 0.01, 0.001, 0.0001]
     # schedulers = ["exponential", "step", "reduce_on_plateau", "cosineannealing"]
