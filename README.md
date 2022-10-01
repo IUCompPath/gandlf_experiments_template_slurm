@@ -16,6 +16,8 @@ All configuration options can be changed depending on the experiment at hand.
 
 - In the file [`config_generator.py`](./config_generator.py), there are examples using which the various hyper-parameters can be altered to create different configurations. 
 - Maximum flexibility is given to the user to decide the folder and configuration file structure. 
+- It is suggested that the user alters few hyper-parameters while keeping the rest consistent. This allows meaningful comparisons between different experiments.
+- This repo allows the creation of such an extensive experimental design.
 - The **only** requirement is that the configurations should be generated under a single folder structure. An example of such a structure exploring 2 different architectures for learning rates of `[0.1,0.01]` with optimizers of `[adam,sgd]` is shown:
 ```
 experiment_template_folder
@@ -40,42 +42,19 @@ experiment_template_folder
 └───unetr
 │   │ ...
 ```
-### Common
-
-These options are common for all and do not change. For example, the following are always set for this template:
-
-- Loss function: dc_log
-- Weighted loss: True
-- Augmentation configurations:
-  - higher prob: affine, noise, Bias
-  - lower prob: blur, rotations, flip, anisotropic
-
-### Top-level configurations
-
-These are defined by the top-level folders.
-
-| Folder | Optimizer | Patch_Size |
-|:------:|:---------:|:----------:|
-|    A   |    adam   |   128**3   |
-|    B   |    sgd    |   128**3   |
-|    C   |    adam   |    64**3   |
-|    D   |    sgd    |    64**3   |
-
-### Lower-level configurations
-
-These are defined by the lower-level numerical configs.
-
-| Config |     Scheduler     | Learning Rate |
-|:------:|:-----------------:|:-------------:|
-|    0   | triangle_modified |      0.1      |
-|    1   |  cosineannealing  |      0.1      |
-|    2   | triangle_modified |      0.5      |
-|    3   |  cosineannealing  |      0.5      |
-|    4   | triangle_modified |      1.0      |
-|    5   |  cosineannealing  |      1.0      |
 
 
 ## Usage
+
+### Creating Configurations
+
+- Once the experimental design has been established, the configurations can be generated using the [`config_generator.py`](./config_generator.py) script. 
+- The user can edit this file to create the desired configurations. 
+```bash
+python config_generator.py
+```
+
+### Submitting Jobs to the CUBIC Cluster
 
 ```bash
 python submitter.py -h
@@ -97,8 +76,18 @@ optional arguments:
   -e , --email          Email address to be used for notifications.
 ```
 
+### Getting overall statistics
+
+The following command will collect the training and validation logs from all experiments and provide the best loss values along with specified metrics for each experiment:
+
+```bash
+python config_generator.py -c False
+```
+
+## Important Notes
+
 - All parameters have _some_ defaults, and should be changed based on the experiment at hand.
 - Use this repo as template to create a new **PRIVATE** repo.
 - Update common config properties as needed.
-- Edit the `data.csv` file to fill in updated data list (channel list should not matter as long as it is consistent). Ensure you have read access to the data.
+- Edit the `data.csv` file to fill in updated data list (channel list should not matter as long as it is consistent). Ensure you have read access to the data. This can be changed to separate `train.csv` and `val.csv` files if needed, which can be passed as comma-separated.
 - Run `python ./submitter.py` with correct options (**OR** change the defaults - whatever is easier) to submit the experiments.
