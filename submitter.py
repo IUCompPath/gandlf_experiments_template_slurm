@@ -132,7 +132,7 @@ if __name__ == "__main__":
                             + " "
                             + output_dir
                             + " "
-                            + args.foldertocopy
+                            + str(args.foldertocopy)
                         )
                         print(command)
                         os.system(command)

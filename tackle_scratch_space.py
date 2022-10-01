@@ -64,24 +64,25 @@ if __name__ == "__main__":
     if "CBICA_TMPDIR" in os.environ:
         tempdir = os.environ["CBICA_TMPDIR"]
         if args.foldertocopy is not None:
-            print("Copying data folder to $CBICA_TMPDIR.")
-            new_data_dir = os.path.join(tempdir, "data")
-            copy_tree(args.foldertocopy, new_data_dir)
+            if args.foldertocopy != "None":
+                print("Copying data folder to $CBICA_TMPDIR.")
+                new_data_dir = os.path.join(tempdir, "data")
+                copy_tree(args.foldertocopy, new_data_dir)
 
-            print("Updating paths in csv files.")
-            data_files_to_replace_path = args.datafile.split(",")
-            new_data_files = ""
-            new_data_files_to_delete = []
-            for data_file in data_files_to_replace_path:
-                new_data_filename = os.path.join(tempdir, os.path.basename(data_file))
-                new_data_files = new_data_filename + ","
-                new_data_files_to_delete.append(new_data_filename)
-                with open(data_file, "r") as f:
-                    lines = f.readlines()
-                with open(new_data_filename, "w") as f:
-                    for line in lines:
-                        line = line.replace(args.foldertocopy, new_data_dir)
-                        f.write(line)
+                print("Updating paths in csv files.")
+                data_files_to_replace_path = args.datafile.split(",")
+                new_data_files = ""
+                new_data_files_to_delete = []
+                for data_file in data_files_to_replace_path:
+                    new_data_filename = os.path.join(tempdir, os.path.basename(data_file))
+                    new_data_files = new_data_filename + ","
+                    new_data_files_to_delete.append(new_data_filename)
+                    with open(data_file, "r") as f:
+                        lines = f.readlines()
+                    with open(new_data_filename, "w") as f:
+                        for line in lines:
+                            line = line.replace(args.foldertocopy, new_data_dir)
+                            f.write(line)
 
             args.datafile = new_data_files[:-1]
 
