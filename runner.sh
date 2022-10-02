@@ -17,7 +17,7 @@
 ### $5: output_dir (relative to cwd)
 ### $6: folder to copy to scratch space
 
-$1 ./tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
+$1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
 
 # ## run actual trainer
 # $1 $2 \

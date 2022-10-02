@@ -62,9 +62,9 @@ if __name__ == "__main__":
     ## special check for $CBICA_TMPDIR
     tempdir = None
     if "CBICA_TMPDIR" in os.environ:
-        tempdir = os.environ["CBICA_TMPDIR"]
         if args.foldertocopy is not None:
             if args.foldertocopy != "None":
+                tempdir = os.environ["CBICA_TMPDIR"]
                 print("Copying data folder to $CBICA_TMPDIR.")
                 new_data_dir = os.path.join(tempdir, "data")
                 copy_tree(args.foldertocopy, new_data_dir)
@@ -84,7 +84,7 @@ if __name__ == "__main__":
                             line = line.replace(args.foldertocopy, new_data_dir)
                             f.write(line)
 
-            args.datafile = new_data_files[:-1]
+                args.datafile = new_data_files[:-1]
 
     command_to_run = (
         sys.executable
