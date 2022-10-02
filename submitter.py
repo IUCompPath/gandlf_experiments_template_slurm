@@ -105,34 +105,43 @@ if __name__ == "__main__":
                         )
                         config, _ = os.path.splitext(internal_file_or_folder)
                         output_dir = os.path.join(current_file_or_folder, config)
-                        # delete previous results and logs
-                        if os.path.isdir(output_dir):
-                            shutil.rmtree(output_dir)
-                        Path(output_dir).mkdir(parents=True, exist_ok=True)
+                        # # delete previous results and logs
+                        # if os.path.isdir(output_dir):
+                        #     shutil.rmtree(output_dir)
+                        # Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-                        command = (
-                            "qsub -N L_"
-                            + file_or_folder
-                            + "_"
-                            + config
-                            + " -M "
-                            + args.email
-                            + " -l "
-                            + args.gputype
-                            + " "
-                            + args.runnerscript
-                            + " "
-                            + args.interpreter
-                            + " "
-                            + args.gandlfrun
-                            + " "
-                            + args.datafile
-                            + " "
-                            + current_config
-                            + " "
-                            + output_dir
-                            + " "
-                            + str(args.foldertocopy)
-                        )
-                        print(command)
-                        os.system(command)
+                        condition = True
+                        # this can be used to only submit those experiments that have not generated results
+                        # condition = not os.path.isfile(os.path.join(output_dir, "logs_validation.csv")) or not os.path.isfile(os.path.join(output_dir, "logs_training.csv"))
+
+                        # if previous results are absent, delete and re-launch
+                        if condition:
+                            shutil.rmtree(output_dir)
+                            Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+                            command = (
+                                "qsub -N L_"
+                                + file_or_folder
+                                + "_"
+                                + config
+                                + " -M "
+                                + args.email
+                                + " -l "
+                                + args.gputype
+                                + " "
+                                + args.runnerscript
+                                + " "
+                                + args.interpreter
+                                + " "
+                                + args.gandlfrun
+                                + " "
+                                + args.datafile
+                                + " "
+                                + current_config
+                                + " "
+                                + output_dir
+                                + " "
+                                + str(args.foldertocopy)
+                            )
+                            print(command)
+                            os.system(command)
