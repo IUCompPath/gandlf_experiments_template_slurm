@@ -109,17 +109,23 @@ if __name__ == "__main__":
                         file_logs_training = os.path.join(current_config_output, "logs_training.csv")
                         file_logs_validation = os.path.join(current_config_output, "logs_validation.csv")
                         if os.path.isfile(file_logs_training) and os.path.isfile(file_logs_validation):
-                            # sort by loss
-                            best_train_loss_row = pandas.read_csv(file_logs_training).sort_values(by="train_loss", ascending=True).iloc[0]
-                            best_valid_loss_row = pandas.read_csv(file_logs_validation).sort_values(by="valid_loss", ascending=True).iloc[0]
-                            best_info["config"].append(dir + "_" + config_output)
-                            best_info["train_epoch"].append(best_train_loss_row["epoch_no"])
-                            best_info["valid_epoch"].append(best_valid_loss_row["epoch_no"])
-                            for type in ["train", "valid"]:
-                                for metric in metrics_to_populate:
-                                    if type == "train":
-                                        best_info["{}_{}".format(type, metric)].append(best_train_loss_row["{}_{}".format(type, metric)])
-                                    else:
-                                        best_info["{}_{}".format(type, metric)].append(best_valid_loss_row["{}_{}".format(type, metric)])
+                            with open(file_logs_training, 'r') as fp:
+                                len_logs_training = len(fp.readlines())
+                            with open(file_logs_validation, 'r') as fp:
+                                len_logs_validation = len(fp.readlines())
+                            # ensure something other than the log headers have been written
+                            if len_logs_training > 2 and len_logs_validation > 2:
+                                # sort by loss
+                                best_train_loss_row = pandas.read_csv(file_logs_training).sort_values(by="train_loss", ascending=True).iloc[0]
+                                best_valid_loss_row = pandas.read_csv(file_logs_validation).sort_values(by="valid_loss", ascending=True).iloc[0]
+                                best_info["config"].append(dir + "_" + config_output)
+                                best_info["train_epoch"].append(best_train_loss_row["epoch_no"])
+                                best_info["valid_epoch"].append(best_valid_loss_row["epoch_no"])
+                                for type in ["train", "valid"]:
+                                    for metric in metrics_to_populate:
+                                        if type == "train":
+                                            best_info["{}_{}".format(type, metric)].append(best_train_loss_row["{}_{}".format(type, metric)])
+                                        else:
+                                            best_info["{}_{}".format(type, metric)].append(best_valid_loss_row["{}_{}".format(type, metric)])
 
         pandas.DataFrame.from_dict(best_info).to_csv(os.path.join(cwd, "best_info.csv"), index=False)
