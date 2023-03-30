@@ -85,6 +85,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     all_files_and_folders.sort()
+    jobs_that_have_run, jobs_that_have_not_run = 0, 0
     for file_or_folder in all_files_and_folders:
         current_file_or_folder = os.path.join(cwd, file_or_folder)
         if os.path.isdir(current_file_or_folder):
@@ -105,17 +106,25 @@ if __name__ == "__main__":
                         )
                         config, _ = os.path.splitext(internal_file_or_folder)
                         output_dir = os.path.join(current_file_or_folder, config)
+                        Path(output_dir).mkdir(parents=True, exist_ok=True)
+                        need_to_run = True
+                        if os.path.isdir(output_dir):
+                            files_in_output_dir = os.listdir(output_dir)
+                            files_in_output_dir.sort()
+                            for output_files in files_in_output_dir:
+                                if output_files.endswith("_best.pth.tar"):
+                                    need_to_run = False
+                                    break
                         # # delete previous results and logs
                         # if os.path.isdir(output_dir):
                         #     shutil.rmtree(output_dir)
                         # Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-                        condition = True
                         # this can be used to only submit those experiments that have not generated results
                         # condition = not os.path.isfile(os.path.join(output_dir, "logs_validation.csv")) or not os.path.isfile(os.path.join(output_dir, "logs_training.csv"))
 
                         # if previous results are absent, delete and re-launch
-                        if condition:
+                        if need_to_run:
                             shutil.rmtree(output_dir)
                             Path(output_dir).mkdir(parents=True, exist_ok=True)
 
@@ -145,3 +154,6 @@ if __name__ == "__main__":
                             )
                             print(command)
                             os.system(command)
+
+    print("Jobs that have run:", jobs_that_have_run)
+    print("Jobs that have not run:", jobs_that_have_not_run)
