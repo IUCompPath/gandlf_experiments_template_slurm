@@ -35,7 +35,6 @@ if __name__ == "__main__":
 
     #### update configurations to be trained
     ### this example is to generate multiple configs based on schedulers and learning rates
-    ### this example is to generate multiple configs based on schedulers and learning rates
     # learning_rates = [0.1, 0.01, 0.001, 0.0001]
     # schedulers = ["exponential", "step", "reduce_on_plateau", "cosineannealing"]
 
