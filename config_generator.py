@@ -32,6 +32,7 @@ if __name__ == "__main__":
     if args.config:
         ## make sure you have a baseline configuration somewhere
         base_config = os.path.join(cwd, "config.yaml")
+    
 
     #### update configurations to be trained
     ### this example is to generate multiple configs based on schedulers and learning rates
@@ -39,7 +40,7 @@ if __name__ == "__main__":
     # schedulers = ["exponential", "step", "reduce_on_plateau", "cosineannealing"]
 
     # for sched in schedulers:
-    #     base_output_dir = os.path.join(current_working_dir, sched)
+    #     base_output_dir = os.path.join(cwd, sched)
     #     pathlib.Path(base_output_dir).mkdir(parents=True, exist_ok=True)
 
     #     for lr in learning_rates:
@@ -56,7 +57,7 @@ if __name__ == "__main__":
     ### this example is to generate multiple configs based on a single scheduler (exponential), learning rate (0.01) and different gammas
     # gamma_vals = [1, 0.01, 0.001, 0.0001]
 
-    # current_config_dir = os.path.join(current_working_dir, "exponential")
+    # current_config_dir = os.path.join(cwd, "exponential")
     # pathlib.Path(current_config_dir).mkdir(parents=True, exist_ok=True)
     # for gamma in gamma_vals:
     #     config_to_write = os.path.join(current_config_dir, "gamma_" + str(gamma) + ".yaml")
@@ -72,18 +73,19 @@ if __name__ == "__main__":
     #         yaml.dump(config, f)
 
 
-    ### this example is to generate multiple configs based on different batch sizes
-    # batch_sizes = [48, 52, 58]
+    ## this example is to generate multiple configs based on different batch sizes
+    batch_sizes = [48, 52, 58]
 
-    # output_dir = os.path.join(current_working_dir, "B")
+    output_dir = os.path.join(cwd, "B")
+    os.makedirs(output_dir, exist_ok=True)
 
-    # for batch in batch_sizes:
-    #     config = os.path.join(output_dir, str(batch) + ".yaml")
-    #     with open(base_config, "r") as f:
-    #         config_dict = yaml.safe_load(f)
-    #     config_dict["batch_size"] = batch
-    #     with open(config, "w") as f:
-    #         yaml.dump(config_dict, f)
+    for batch in batch_sizes:
+        config = os.path.join(output_dir, str(batch) + ".yaml")
+        with open(base_config, "r") as f:
+            config_dict = yaml.safe_load(f)
+        config_dict["batch_size"] = batch
+        with open(config, "w") as f:
+            yaml.dump(config_dict, f)
     
     else:
         # get information about best config
