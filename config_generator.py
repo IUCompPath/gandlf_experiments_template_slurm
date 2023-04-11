@@ -32,9 +32,9 @@ if __name__ == "__main__":
     if args.config:
         ## make sure you have a baseline configuration somewhere
         base_config = os.path.join(cwd, "config.yaml")
-    
 
     #### update configurations to be trained
+    ### this example is to generate multiple configs based on schedulers and learning rates
     ### this example is to generate multiple configs based on schedulers and learning rates
     # learning_rates = [0.1, 0.01, 0.001, 0.0001]
     # schedulers = ["exponential", "step", "reduce_on_plateau", "cosineannealing"]
@@ -74,18 +74,18 @@ if __name__ == "__main__":
 
 
     ## this example is to generate multiple configs based on different batch sizes
-    batch_sizes = [48, 52, 58]
+    # batch_sizes = [48, 52, 58]
 
-    output_dir = os.path.join(cwd, "B")
-    os.makedirs(output_dir, exist_ok=True)
+    # output_dir = os.path.join(cwd, "B")
+    # os.makedirs(output_dir, exist_ok=True)
 
-    for batch in batch_sizes:
-        config = os.path.join(output_dir, str(batch) + ".yaml")
-        with open(base_config, "r") as f:
-            config_dict = yaml.safe_load(f)
-        config_dict["batch_size"] = batch
-        with open(config, "w") as f:
-            yaml.dump(config_dict, f)
+    # for batch in batch_sizes:
+    #     config = os.path.join(output_dir, str(batch) + ".yaml")
+    #     with open(base_config, "r") as f:
+    #         config_dict = yaml.safe_load(f)
+    #     config_dict["batch_size"] = batch
+    #     with open(config, "w") as f:
+    #         yaml.dump(config_dict, f)
     
     else:
         # get information about best config
