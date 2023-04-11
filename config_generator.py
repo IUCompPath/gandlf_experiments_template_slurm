@@ -72,10 +72,11 @@ if __name__ == "__main__":
     #         yaml.dump(config, f)
 
 
-    ### this example is to generate multiple configs based on different batch sizes
+    ## this example is to generate multiple configs based on different batch sizes
     # batch_sizes = [48, 52, 58]
 
     # output_dir = os.path.join(cwd, "B")
+    # os.makedirs(output_dir, exist_ok=True)
 
     # for batch in batch_sizes:
     #     config = os.path.join(output_dir, str(batch) + ".yaml")
