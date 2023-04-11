@@ -19,11 +19,11 @@
 
 echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
 
-if [ $CUDA_VISIBLE_DEVICES != 0 ] ; then
-    # Exit with status 99, which tells the scheduler to resubmit the job
-    # https://cbica-portal.uphs.upenn.edu/rt/Ticket/Display.html?id=6194 
-    exit 99
-fi
+# if [ $CUDA_VISIBLE_DEVICES != 0 ] ; then
+#     # Exit with status 99, which tells the scheduler to resubmit the job
+#     # https://cbica-portal.uphs.upenn.edu/rt/Ticket/Display.html?id=6194 
+#     exit 99
+# fi
 
 $1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
 
