@@ -17,6 +17,13 @@
 ### $5: output_dir (relative to cwd)
 ### $6: folder to copy to scratch space
 
+echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
+
+if [ $CUDA_VISIBLE_DEVICES != 0 ] ; then
+    # Exit with status 99, which tells the scheduler to resubmit the job
+    exit 99
+fi
+
 $1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
 
 # ## run actual trainer
