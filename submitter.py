@@ -85,6 +85,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     all_files_and_folders.sort()
+    counter = 0 # used to change the gpu type for submission
     jobs_that_have_run, jobs_that_have_not_run = 0, 0
     for file_or_folder in all_files_and_folders:
         current_file_or_folder = os.path.join(cwd, file_or_folder)
@@ -128,6 +129,13 @@ if __name__ == "__main__":
                             shutil.rmtree(output_dir)
                             Path(output_dir).mkdir(parents=True, exist_ok=True)
 
+                            modified_gpu = args.gputype
+                            ## since A40 is less available than gpu, we will use gpu for 3 out of 4 jobs - change as needed
+                            # if counter % 4 == 0:
+                            #     modified_gpu = "A40"
+                            # else:
+                            #     modified_gpu = "gpu"
+
                             command = (
                                 "qsub -N L_"
                                 + file_or_folder
@@ -136,7 +144,7 @@ if __name__ == "__main__":
                                 + " -M "
                                 + args.email
                                 + " -l "
-                                + args.gputype
+                                + modified_gpu
                                 + " "
                                 + args.runnerscript
                                 + " "
@@ -154,6 +162,10 @@ if __name__ == "__main__":
                             )
                             print(command)
                             os.system(command)
+                            counter += 1
+                            jobs_that_have_not_run += 1
+                        else:
+                            jobs_that_have_run += 1
 
     print("Jobs that have run:", jobs_that_have_run)
     print("Jobs that have not run:", jobs_that_have_not_run)
