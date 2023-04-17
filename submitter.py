@@ -81,6 +81,14 @@ if __name__ == "__main__":
         type=str,
         help="The parameter to pass after '-l' to the submit command.",
     )
+    parser.add_argument(
+        "-gpur",
+        "--gpuratio",
+        metavar="",
+        default=4,
+        type=int,
+        help="The number of jobs (starting from '0') to send to 'gpu' vs 'A40', since 'gpu' is more prevalent - ignores parameter `--gputype`.",
+    )
 
     args = parser.parse_args()
 
@@ -129,12 +137,14 @@ if __name__ == "__main__":
                             shutil.rmtree(output_dir)
                             Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-                            modified_gpu = args.gputype
                             ## since A40 is less available than gpu, we will use gpu for 3 out of 4 jobs - change as needed
-                            # if counter % 4 == 0:
-                            #     modified_gpu = "A40"
-                            # else:
-                            #     modified_gpu = "gpu"
+                            if isinstance(args.gpuratio, int):
+                                modified_gpu = "gpu"
+                                if counter == args.gpuratio:
+                                    modified_gpu = "A40"
+                                    counter = -1
+                            else:
+                                modified_gpu = args.gputype
 
                             command = (
                                 "qsub -N L_"
