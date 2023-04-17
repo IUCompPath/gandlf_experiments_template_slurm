@@ -58,22 +58,25 @@ python config_generator.py
 
 ```bash
 python submitter.py -h
-usage: GANDLF_Experiment_Submitter [-h] [-i] [-g] [-d] [-r]
+usage: GANDLF_Experiment_Submitter [-h] [-i] [-g] [-d] [-f] [-r] [-e] [-gpu] [-gpur]
 
 Submit GaNDLF experiments on CUBIC Cluster.
 
 Contact: software@cbica.upenn.edu
 
 This program is NOT FDA/CE approved and NOT intended for clinical use.
-Copyright (c) 2022 University of Pennsylvania. All rights reserved.
+Copyright (c) 2023 University of Pennsylvania. All rights reserved.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -i , --interpreter    Full path of python interpreter to be called. 
+  -i , --interpreter    Full path of python interpreter to be called.
   -g , --gandlfrun      Full path of 'gandlf_run' script to be called.
   -d , --datafile       Full path to 'data.csv'.
+  -f , --foldertocopy   Full path to the data folder to copy into the location in '$CBICA_TMP'.
   -r , --runnerscript   'runner.sh' script to be called.
   -e , --email          Email address to be used for notifications.
+  -gpu , --gputype      The parameter to pass after '-l' to the submit command.
+  -gpur , --gpuratio    The number of jobs (starting from '0') to send to 'gpu' vs 'A40', since 'gpu' is more prevalent - ignores parameter `--gputype`.
 ```
 
 ### Getting overall statistics
@@ -83,6 +86,8 @@ The following command will collect the training and validation logs from all exp
 ```bash
 python config_generator.py -c False
 ```
+
+This will generate a file `best_info.csv` in the current directory. This file can be used to generate a table of best results for each experiment.
 
 ## Important Notes
 
