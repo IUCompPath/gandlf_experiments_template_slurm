@@ -74,7 +74,9 @@ if __name__ == "__main__":
                 new_data_files = ""
                 new_data_files_to_delete = []
                 for data_file in data_files_to_replace_path:
-                    new_data_filename = os.path.join(tempdir, os.path.basename(data_file))
+                    new_data_filename = os.path.join(
+                        tempdir, os.path.basename(data_file)
+                    )
                     new_data_files = new_data_filename + ","
                     new_data_files_to_delete.append(new_data_filename)
                     with open(data_file, "r") as f:
