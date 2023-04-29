@@ -114,6 +114,7 @@ if __name__ == "__main__":
         best_info = {"config": [], "train_epoch": [], "valid_epoch": []}
         ## populate the metrics to be shown - example shown for classification
         metrics_to_populate = ["loss", "balanced_accuracy", "accuracy"]
+        metrics_calculated_per_label = ["accuracy"]  # not always present
         for metric in metrics_to_populate:
             for type in ["train", "valid"]:
                 best_info[type + "_" + metric] = []
@@ -178,7 +179,7 @@ if __name__ == "__main__":
                                     ### replace the per_label metric header information to ensure correct parsing - change as needed
                                     def get_new_header(cohort):
                                         return_string = "epoch_no," + cohort + "_loss,"
-                                        for metric in metrics_to_populate:
+                                        for metric in metrics_calculated_per_label:
                                             if metric != "loss":
                                                 return_string += (
                                                     cohort
