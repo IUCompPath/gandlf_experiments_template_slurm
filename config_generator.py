@@ -1,4 +1,4 @@
-import os, yaml, pandas, argparse, ast, fileinput
+import os, yaml, pandas, argparse, ast, fileinput, tempfile, shutil
 from datetime import date
 from pathlib import Path
 
@@ -202,6 +202,7 @@ if __name__ == "__main__":
                                                 )
                                         return return_string
 
+                                    temp_dir = tempfile.gettempdir()
                                     def replace_per_label_metrics(filename, new_header):
                                         for line in fileinput.input(
                                             filename, inplace=True
@@ -216,21 +217,32 @@ if __name__ == "__main__":
                                             else:
                                                 print(line)
 
+                                    new_train_file = os.path.join(
+                                        temp_dir, "logs_training.csv"
+                                    )
+                                    shutil.copyfile(file_logs_training, new_train_file)
+                                    new_valid_file = os.path.join(
+                                        temp_dir, "logs_validation.csv"
+                                    )
+                                    shutil.copyfile(
+                                        file_logs_validation, new_valid_file
+                                    )
+
                                     replace_per_label_metrics(
-                                        file_logs_training, get_new_header("train")
+                                        new_train_file, get_new_header("train")
                                     )
                                     replace_per_label_metrics(
-                                        file_logs_validation, get_new_header("valid")
+                                        new_valid_file, temp_dir, get_new_header("valid")
                                     )
                                     ### replace the per_label metric header information to ensure correct parsing - change as needed
                                     ## sort by loss
                                     best_train_loss_row = (
-                                        pandas.read_csv(file_logs_training)
+                                        pandas.read_csv(new_train_file)
                                         .sort_values(by="train_loss", ascending=True)
                                         .iloc[0]
                                     )
                                     best_valid_loss_row = (
-                                        pandas.read_csv(file_logs_validation)
+                                        pandas.read_csv(new_valid_file)
                                         .sort_values(by="valid_loss", ascending=True)
                                         .iloc[0]
                                     )
