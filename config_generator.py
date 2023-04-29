@@ -168,12 +168,23 @@ if __name__ == "__main__":
                                 with open(file_logs_validation, "r") as fp:
                                     len_logs_validation = len(fp.readlines())
                                 # ensure something other than the log headers have been written
-                                if len_logs_training > 2 and len_logs_validation > 2:
+                                if len_logs_training > 2 and len_logs_validation > 2:                                    
+                                    new_train_file = os.path.join(
+                                        temp_dir, "logs_training.csv"
+                                    )
+                                    shutil.copyfile(file_logs_training, new_train_file)
+                                    new_valid_file = os.path.join(
+                                        temp_dir, "logs_validation.csv"
+                                    )
+                                    shutil.copyfile(
+                                        file_logs_validation, new_valid_file
+                                    )
+
                                     assert not detect_per_label_metrics(
-                                        file_logs_training
+                                        new_train_file
                                     ), "Per label metrics detected in training logs - update metrics_calculated_per_label with correct information, and comment these lines to ensure correct parsing"
                                     assert not detect_per_label_metrics(
-                                        file_logs_validation
+                                        new_valid_file
                                     ), "Per label metrics detected in validation logs - update metrics_calculated_per_label with correct information, and comment these lines to ensure correct parsing"
 
                                     ### replace the per_label metric header information to ensure correct parsing - change as needed
@@ -216,17 +227,6 @@ if __name__ == "__main__":
                                                         print(new_header)
                                             else:
                                                 print(line)
-
-                                    new_train_file = os.path.join(
-                                        temp_dir, "logs_training.csv"
-                                    )
-                                    shutil.copyfile(file_logs_training, new_train_file)
-                                    new_valid_file = os.path.join(
-                                        temp_dir, "logs_validation.csv"
-                                    )
-                                    shutil.copyfile(
-                                        file_logs_validation, new_valid_file
-                                    )
 
                                     replace_per_label_metrics(
                                         new_train_file, get_new_header("train")
