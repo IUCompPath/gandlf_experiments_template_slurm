@@ -3,7 +3,6 @@ from datetime import date
 from pathlib import Path
 
 if __name__ == "__main__":
-
     copyrightMessage = (
         "Contact: software@cbica.upenn.edu\n\n"
         + "This program is NOT FDA/CE approved and NOT intended for clinical use.\nCopyright (c) "
@@ -52,7 +51,6 @@ if __name__ == "__main__":
     #         with open(os.path.join(base_output_dir, str(lr) + ".yaml"), "w") as f:
     #             yaml.dump(config, f)
 
-
     ### this example is to generate multiple configs based on a single scheduler (exponential), learning rate (0.01) and different gammas
     # gamma_vals = [1, 0.01, 0.001, 0.0001]
 
@@ -71,7 +69,6 @@ if __name__ == "__main__":
     #     with open(config_to_write, "w") as f:
     #         yaml.dump(config, f)
 
-
     ## this example is to generate multiple configs based on different batch sizes
     # batch_sizes = [48, 52, 58]
 
@@ -85,7 +82,7 @@ if __name__ == "__main__":
     #     config_dict["batch_size"] = batch
     #     with open(config, "w") as f:
     #         yaml.dump(config_dict, f)
-    
+
     else:
         # get information about best config
         dirs_in_cwd = os.listdir(cwd)
@@ -107,12 +104,18 @@ if __name__ == "__main__":
                     current_config_output = os.path.join(current_dir, config_output)
                     if os.path.isdir(current_config_output):
                         print("Current config output: ", current_config_output)
-                        file_logs_training = os.path.join(current_config_output, "logs_training.csv")
-                        file_logs_validation = os.path.join(current_config_output, "logs_validation.csv")
-                        if os.path.isfile(file_logs_training) and os.path.isfile(file_logs_validation):
-                            with open(file_logs_training, 'r') as fp:
+                        file_logs_training = os.path.join(
+                            current_config_output, "logs_training.csv"
+                        )
+                        file_logs_validation = os.path.join(
+                            current_config_output, "logs_validation.csv"
+                        )
+                        if os.path.isfile(file_logs_training) and os.path.isfile(
+                            file_logs_validation
+                        ):
+                            with open(file_logs_training, "r") as fp:
                                 len_logs_training = len(fp.readlines())
-                            with open(file_logs_validation, 'r') as fp:
+                            with open(file_logs_validation, "r") as fp:
                                 len_logs_validation = len(fp.readlines())
                             # ensure something other than the log headers have been written
                             if len_logs_training > 2 and len_logs_validation > 2:
@@ -129,21 +132,47 @@ if __name__ == "__main__":
                                 #                 print(new_header)
                                 #         else:
                                 #             print(line)
-                                
+
                                 # replace_per_label_metrics(file_logs_training, get_new_header("train"))
                                 # replace_per_label_metrics(file_logs_validation, get_new_header("valid"))
                                 # ### replace the per_label metric header information to ensure correct parsing - change as needed
                                 ## sort by loss
-                                best_train_loss_row = pandas.read_csv(file_logs_training).sort_values(by="train_loss", ascending=True).iloc[0]
-                                best_valid_loss_row = pandas.read_csv(file_logs_validation).sort_values(by="valid_loss", ascending=True).iloc[0]
+                                best_train_loss_row = (
+                                    pandas.read_csv(file_logs_training)
+                                    .sort_values(by="train_loss", ascending=True)
+                                    .iloc[0]
+                                )
+                                best_valid_loss_row = (
+                                    pandas.read_csv(file_logs_validation)
+                                    .sort_values(by="valid_loss", ascending=True)
+                                    .iloc[0]
+                                )
                                 best_info["config"].append(dir + "_" + config_output)
-                                best_info["train_epoch"].append(best_train_loss_row["epoch_no"])
-                                best_info["valid_epoch"].append(best_valid_loss_row["epoch_no"])
+                                best_info["train_epoch"].append(
+                                    best_train_loss_row["epoch_no"]
+                                )
+                                best_info["valid_epoch"].append(
+                                    best_valid_loss_row["epoch_no"]
+                                )
                                 for type in ["train", "valid"]:
                                     for metric in metrics_to_populate:
                                         if type == "train":
-                                            best_info["{}_{}".format(type, metric)].append(best_train_loss_row["{}_{}".format(type, metric)])
+                                            best_info[
+                                                "{}_{}".format(type, metric)
+                                            ].append(
+                                                best_train_loss_row[
+                                                    "{}_{}".format(type, metric)
+                                                ]
+                                            )
                                         else:
-                                            best_info["{}_{}".format(type, metric)].append(best_valid_loss_row["{}_{}".format(type, metric)])
+                                            best_info[
+                                                "{}_{}".format(type, metric)
+                                            ].append(
+                                                best_valid_loss_row[
+                                                    "{}_{}".format(type, metric)
+                                                ]
+                                            )
 
-        pandas.DataFrame.from_dict(best_info).to_csv(os.path.join(cwd, "best_info.csv"), index=False)
+        pandas.DataFrame.from_dict(best_info).to_csv(
+            os.path.join(cwd, "best_info.csv"), index=False
+        )
