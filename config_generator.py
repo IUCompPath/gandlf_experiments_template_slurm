@@ -168,7 +168,9 @@ if __name__ == "__main__":
                                 with open(file_logs_validation, "r") as fp:
                                     len_logs_validation = len(fp.readlines())
                                 # ensure something other than the log headers have been written
-                                if len_logs_training > 2 and len_logs_validation > 2:                                    
+                                if len_logs_training > 2 and len_logs_validation > 2:
+                                    temp_dir = tempfile.gettempdir()
+                                    Path.mkdir(temp_dir, parents=True, exist_ok=True)                            
                                     new_train_file = os.path.join(
                                         temp_dir, "logs_training.csv"
                                     )
@@ -212,8 +214,6 @@ if __name__ == "__main__":
                                                     + ","
                                                 )
                                         return return_string
-
-                                    temp_dir = tempfile.gettempdir()
                                     def replace_per_label_metrics(filename, new_header):
                                         for line in fileinput.input(
                                             filename, inplace=True
@@ -255,6 +255,7 @@ if __name__ == "__main__":
                                     best_info["valid_epoch"].append(
                                         best_valid_loss_row["epoch_no"]
                                     )
+                                    shutil.rmtree(temp_dir)
                                     for type in ["train", "valid"]:
                                         for metric in metrics_to_populate:
                                             if type == "train":
