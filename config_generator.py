@@ -1,6 +1,30 @@
-import os, pandas, argparse, ast, fileinput
+import os, yaml, pandas, argparse, ast, fileinput
 from datetime import date
 from pathlib import Path
+
+
+## detect "_per_label" metrics
+def detect_per_label_metrics(filename):
+    """
+    This function detects if the file contains triaged (i.e., metrics split per label) per_label metrics or not
+
+    Args:
+        filename (str): The log file to check.
+
+    Returns:
+        bool: True if the file contains triaged per_label metrics or does not contain per_label stats, False otherwise.
+    """
+    with open(filename, "r") as fp:
+        header = fp.readline()
+    if "_per_label" in header:
+        if "_per_label_" in header:
+            # in this case, the per label triage has already happened
+            return False
+        else:
+            return True
+    else:
+        return False
+
 
 if __name__ == "__main__":
     copyrightMessage = (
@@ -109,6 +133,21 @@ if __name__ == "__main__":
                         current_config = os.path.join(
                             current_dir, internal_file_or_folder
                         )
+                        config = yaml.safe_load(open(current_config))
+                        assert (
+                            "model" in config
+                        ), "The 'model' attribute was not found in config"
+                        if "num_classes" in config["model"]:
+                            number_of_classes = config["model"]["num_classes"]
+                        elif "class_list" in config["model"]:
+                            number_of_classes = len(config["model"]["class_list"])
+                        else:
+                            number_of_classes = 0
+                            print(
+                                "The number of classes could not be determined from the config file:",
+                                current_config,
+                            )
+
                         config_output_dir = os.path.join(
                             current_dir, internal_file_or_folder.split(".")[0]
                         )
@@ -129,48 +168,60 @@ if __name__ == "__main__":
                                     len_logs_validation = len(fp.readlines())
                                 # ensure something other than the log headers have been written
                                 if len_logs_training > 2 and len_logs_validation > 2:
-                                    ## detect "_per_label" metrics
-                                    def detect_per_label_metrics(filename):
-                                        with open(filename, "r") as fp:
-                                            header = fp.readline()
-                                        if "_per_label" in header:
-                                            return True
-                                        else:
-                                            return False
-                                    
-                                    assert not detect_per_label_metrics(file_logs_training), "Per label metrics detected in training logs"
-                                    assert not detect_per_label_metrics(file_logs_validation), "Per label metrics detected in validation logs"
+                                    assert not detect_per_label_metrics(
+                                        file_logs_training
+                                    ), "Per label metrics detected in training logs - update the get_new_header function with correct information, and comment these lines to ensure correct parsing"
+                                    assert not detect_per_label_metrics(
+                                        file_logs_validation
+                                    ), "Per label metrics detected in validation logs - update the get_new_header function with correct information, and comment these lines to ensure correct parsing"
 
-                                    # replace per_label metrics with a single metric
+                                    ### replace the per_label metric header information to ensure correct parsing - change as needed
+                                    def get_new_header(cohort):
+                                        return_string = "epoch_no," + cohort + "_loss,"
+                                        for metric in metrics_to_populate:
+                                            if metric != "loss":
+                                                return_string += (
+                                                    cohort
+                                                    + "_"
+                                                    + metric
+                                                    + ","
+                                                    + ",".join(
+                                                        [
+                                                            cohort
+                                                            + "_"
+                                                            + metric
+                                                            + "_per_label_"
+                                                            + str(i)
+                                                            for i in range(
+                                                                number_of_classes
+                                                            )
+                                                        ]
+                                                    )
+                                                    + ","
+                                                )
+                                        return return_string
+
                                     def replace_per_label_metrics(filename, new_header):
-                                        for line in fileinput.input(filename, inplace=True):
+                                        for line in fileinput.input(
+                                            filename, inplace=True
+                                        ):
                                             if fileinput.isfirstline():
-                                                if "_per_label" in line:
-                                                    print(line)
-                                                else:
-                                                    print(new_header)
+                                                if "_dice_per_label" in line:
+                                                    if "_dice_per_label_" in line:
+                                                        # this means the per label metrics have already been replaced
+                                                        print(line)
+                                                    else:
+                                                        print(new_header)
                                             else:
-                                                if "_per_label" in line:
-                                                    pass
-                                                else:
-                                                    print(line)
+                                                print(line)
 
-                                    # ### replace the per_label metric header information to ensure correct parsing - change as needed
-                                    # def get_new_header(cohort):
-                                    #     return "epoch_no," + cohort + "_loss," + cohort + "_dice," + ",".join([cohort + "_dice_per_label_" + str(i) for i in range(3)])
-                                    # def replace_per_label_metrics(filename, new_header):
-                                    #     for line in fileinput.input(filename, inplace=True):
-                                    #         if fileinput.isfirstline():
-                                    #             if "_dice_per_label_" in line:
-                                    #                 print(line)
-                                    #             else:
-                                    #                 print(new_header)
-                                    #         else:
-                                    #             print(line)
-
-                                    # replace_per_label_metrics(file_logs_training, get_new_header("train"))
-                                    # replace_per_label_metrics(file_logs_validation, get_new_header("valid"))
-                                    # ### replace the per_label metric header information to ensure correct parsing - change as needed
+                                    replace_per_label_metrics(
+                                        file_logs_training, get_new_header("train")
+                                    )
+                                    replace_per_label_metrics(
+                                        file_logs_validation, get_new_header("valid")
+                                    )
+                                    ### replace the per_label metric header information to ensure correct parsing - change as needed
                                     ## sort by loss
                                     best_train_loss_row = (
                                         pandas.read_csv(file_logs_training)
@@ -182,7 +233,9 @@ if __name__ == "__main__":
                                         .sort_values(by="valid_loss", ascending=True)
                                         .iloc[0]
                                     )
-                                    best_info["config"].append(dir + "_" + internal_file_or_folder)
+                                    best_info["config"].append(
+                                        dir + "_" + internal_file_or_folder
+                                    )
                                     best_info["train_epoch"].append(
                                         best_train_loss_row["epoch_no"]
                                     )
