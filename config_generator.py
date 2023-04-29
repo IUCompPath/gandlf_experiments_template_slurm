@@ -171,10 +171,10 @@ if __name__ == "__main__":
                                 if len_logs_training > 2 and len_logs_validation > 2:
                                     assert not detect_per_label_metrics(
                                         file_logs_training
-                                    ), "Per label metrics detected in training logs - update the get_new_header function with correct information, and comment these lines to ensure correct parsing"
+                                    ), "Per label metrics detected in training logs - update metrics_calculated_per_label with correct information, and comment these lines to ensure correct parsing"
                                     assert not detect_per_label_metrics(
                                         file_logs_validation
-                                    ), "Per label metrics detected in validation logs - update the get_new_header function with correct information, and comment these lines to ensure correct parsing"
+                                    ), "Per label metrics detected in validation logs - update metrics_calculated_per_label with correct information, and comment these lines to ensure correct parsing"
 
                                     ### replace the per_label metric header information to ensure correct parsing - change as needed
                                     def get_new_header(cohort):
