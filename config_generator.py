@@ -116,7 +116,24 @@ if __name__ == "__main__":
                                 len_logs_validation = len(fp.readlines())
                             # ensure something other than the log headers have been written
                             if len_logs_training > 2 and len_logs_validation > 2:
-                                # sort by loss
+                                # ### replace the per_label metric header information to ensure correct parsing - change as needed
+                                # import fileinput
+                                # def get_new_header(cohort):
+                                #     return "epoch_no," + cohort + "_loss," + cohort + "_dice," + ",".join([cohort + "_dice_per_label_" + str(i) for i in range(3)])
+                                # def replace_per_label_metrics(filename, new_header):
+                                #     for line in fileinput.input(filename, inplace=True):
+                                #         if fileinput.isfirstline():
+                                #             if "_dice_per_label_" in line:
+                                #                 print(line)
+                                #             else:
+                                #                 print(new_header)
+                                #         else:
+                                #             print(line)
+                                
+                                # replace_per_label_metrics(file_logs_training, get_new_header("train"))
+                                # replace_per_label_metrics(file_logs_validation, get_new_header("valid"))
+                                # ### replace the per_label metric header information to ensure correct parsing - change as needed
+                                ## sort by loss
                                 best_train_loss_row = pandas.read_csv(file_logs_training).sort_values(by="train_loss", ascending=True).iloc[0]
                                 best_valid_loss_row = pandas.read_csv(file_logs_validation).sort_values(by="valid_loss", ascending=True).iloc[0]
                                 best_info["config"].append(dir + "_" + config_output)
