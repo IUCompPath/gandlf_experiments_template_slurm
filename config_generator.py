@@ -1,4 +1,4 @@
-import os, yaml, pandas, argparse, ast
+import os, pandas, argparse, ast, fileinput
 from datetime import date
 from pathlib import Path
 
@@ -100,78 +100,113 @@ if __name__ == "__main__":
                 print("Current directory: ", current_dir)
                 config_outputs_in_dir = os.listdir(current_dir)
                 config_outputs_in_dir.sort()
-                for config_output in config_outputs_in_dir:
-                    current_config_output = os.path.join(current_dir, config_output)
-                    if os.path.isdir(current_config_output):
-                        print("Current config output: ", current_config_output)
-                        file_logs_training = os.path.join(
-                            current_config_output, "logs_training.csv"
+                files_and_folders_inside = os.listdir(current_dir)
+                files_and_folders_inside.sort()
+                for internal_file_or_folder in files_and_folders_inside:
+                    if internal_file_or_folder.endswith(
+                        ".yaml"
+                    ) or internal_file_or_folder.endswith(".yml"):
+                        current_config = os.path.join(
+                            current_dir, internal_file_or_folder
                         )
-                        file_logs_validation = os.path.join(
-                            current_config_output, "logs_validation.csv"
+                        config_output_dir = os.path.join(
+                            current_dir, internal_file_or_folder.split(".")[0]
                         )
-                        if os.path.isfile(file_logs_training) and os.path.isfile(
-                            file_logs_validation
-                        ):
-                            with open(file_logs_training, "r") as fp:
-                                len_logs_training = len(fp.readlines())
-                            with open(file_logs_validation, "r") as fp:
-                                len_logs_validation = len(fp.readlines())
-                            # ensure something other than the log headers have been written
-                            if len_logs_training > 2 and len_logs_validation > 2:
-                                # ### replace the per_label metric header information to ensure correct parsing - change as needed
-                                # import fileinput
-                                # def get_new_header(cohort):
-                                #     return "epoch_no," + cohort + "_loss," + cohort + "_dice," + ",".join([cohort + "_dice_per_label_" + str(i) for i in range(3)])
-                                # def replace_per_label_metrics(filename, new_header):
-                                #     for line in fileinput.input(filename, inplace=True):
-                                #         if fileinput.isfirstline():
-                                #             if "_dice_per_label_" in line:
-                                #                 print(line)
-                                #             else:
-                                #                 print(new_header)
-                                #         else:
-                                #             print(line)
-
-                                # replace_per_label_metrics(file_logs_training, get_new_header("train"))
-                                # replace_per_label_metrics(file_logs_validation, get_new_header("valid"))
-                                # ### replace the per_label metric header information to ensure correct parsing - change as needed
-                                ## sort by loss
-                                best_train_loss_row = (
-                                    pandas.read_csv(file_logs_training)
-                                    .sort_values(by="train_loss", ascending=True)
-                                    .iloc[0]
-                                )
-                                best_valid_loss_row = (
-                                    pandas.read_csv(file_logs_validation)
-                                    .sort_values(by="valid_loss", ascending=True)
-                                    .iloc[0]
-                                )
-                                best_info["config"].append(dir + "_" + config_output)
-                                best_info["train_epoch"].append(
-                                    best_train_loss_row["epoch_no"]
-                                )
-                                best_info["valid_epoch"].append(
-                                    best_valid_loss_row["epoch_no"]
-                                )
-                                for type in ["train", "valid"]:
-                                    for metric in metrics_to_populate:
-                                        if type == "train":
-                                            best_info[
-                                                "{}_{}".format(type, metric)
-                                            ].append(
-                                                best_train_loss_row[
-                                                    "{}_{}".format(type, metric)
-                                                ]
-                                            )
+                        if os.path.isdir(config_output_dir):
+                            print("Current config output: ", config_output_dir)
+                            file_logs_training = os.path.join(
+                                config_output_dir, "logs_training.csv"
+                            )
+                            file_logs_validation = os.path.join(
+                                config_output_dir, "logs_validation.csv"
+                            )
+                            if os.path.isfile(file_logs_training) and os.path.isfile(
+                                file_logs_validation
+                            ):
+                                with open(file_logs_training, "r") as fp:
+                                    len_logs_training = len(fp.readlines())
+                                with open(file_logs_validation, "r") as fp:
+                                    len_logs_validation = len(fp.readlines())
+                                # ensure something other than the log headers have been written
+                                if len_logs_training > 2 and len_logs_validation > 2:
+                                    ## detect "_per_label" metrics
+                                    def detect_per_label_metrics(filename):
+                                        with open(filename, "r") as fp:
+                                            header = fp.readline()
+                                        if "_per_label" in header:
+                                            return True
                                         else:
-                                            best_info[
-                                                "{}_{}".format(type, metric)
-                                            ].append(
-                                                best_valid_loss_row[
+                                            return False
+                                    
+                                    assert not detect_per_label_metrics(file_logs_training), "Per label metrics detected in training logs"
+                                    assert not detect_per_label_metrics(file_logs_validation), "Per label metrics detected in validation logs"
+
+                                    # replace per_label metrics with a single metric
+                                    def replace_per_label_metrics(filename, new_header):
+                                        for line in fileinput.input(filename, inplace=True):
+                                            if fileinput.isfirstline():
+                                                if "_per_label" in line:
+                                                    print(line)
+                                                else:
+                                                    print(new_header)
+                                            else:
+                                                if "_per_label" in line:
+                                                    pass
+                                                else:
+                                                    print(line)
+
+                                    # ### replace the per_label metric header information to ensure correct parsing - change as needed
+                                    # def get_new_header(cohort):
+                                    #     return "epoch_no," + cohort + "_loss," + cohort + "_dice," + ",".join([cohort + "_dice_per_label_" + str(i) for i in range(3)])
+                                    # def replace_per_label_metrics(filename, new_header):
+                                    #     for line in fileinput.input(filename, inplace=True):
+                                    #         if fileinput.isfirstline():
+                                    #             if "_dice_per_label_" in line:
+                                    #                 print(line)
+                                    #             else:
+                                    #                 print(new_header)
+                                    #         else:
+                                    #             print(line)
+
+                                    # replace_per_label_metrics(file_logs_training, get_new_header("train"))
+                                    # replace_per_label_metrics(file_logs_validation, get_new_header("valid"))
+                                    # ### replace the per_label metric header information to ensure correct parsing - change as needed
+                                    ## sort by loss
+                                    best_train_loss_row = (
+                                        pandas.read_csv(file_logs_training)
+                                        .sort_values(by="train_loss", ascending=True)
+                                        .iloc[0]
+                                    )
+                                    best_valid_loss_row = (
+                                        pandas.read_csv(file_logs_validation)
+                                        .sort_values(by="valid_loss", ascending=True)
+                                        .iloc[0]
+                                    )
+                                    best_info["config"].append(dir + "_" + internal_file_or_folder)
+                                    best_info["train_epoch"].append(
+                                        best_train_loss_row["epoch_no"]
+                                    )
+                                    best_info["valid_epoch"].append(
+                                        best_valid_loss_row["epoch_no"]
+                                    )
+                                    for type in ["train", "valid"]:
+                                        for metric in metrics_to_populate:
+                                            if type == "train":
+                                                best_info[
                                                     "{}_{}".format(type, metric)
-                                                ]
-                                            )
+                                                ].append(
+                                                    best_train_loss_row[
+                                                        "{}_{}".format(type, metric)
+                                                    ]
+                                                )
+                                            else:
+                                                best_info[
+                                                    "{}_{}".format(type, metric)
+                                                ].append(
+                                                    best_valid_loss_row[
+                                                        "{}_{}".format(type, metric)
+                                                    ]
+                                                )
 
         pandas.DataFrame.from_dict(best_info).to_csv(
             os.path.join(cwd, "best_info.csv"), index=False
