@@ -93,7 +93,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     all_files_and_folders.sort()
-    counter = 0 # used to change the gpu type for submission
+    counter = 0  # used to change the gpu type for submission
     jobs_that_have_run, jobs_that_have_not_run = 0, 0
     for file_or_folder in all_files_and_folders:
         current_file_or_folder = os.path.join(cwd, file_or_folder)
