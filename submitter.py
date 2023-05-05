@@ -29,7 +29,7 @@ if __name__ == "__main__":
         "-i",
         "--interpreter",
         metavar="",
-        default="/cbica/comp_space/patis/testing/gandlf_mine/venv11/bin/python",
+        default="/cbica/comp_space/patis/testing/gandlf_mine/venv/bin/python",
         type=str,
         help="Full path of python interpreter to be called.",
     )
