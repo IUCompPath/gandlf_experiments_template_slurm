@@ -170,7 +170,7 @@ if __name__ == "__main__":
                                 # ensure something other than the log headers have been written
                                 if len_logs_training > 2 and len_logs_validation > 2:
                                     temp_dir = tempfile.gettempdir()
-                                    Path.mkdir(temp_dir, parents=True, exist_ok=True)                            
+                                    Path(temp_dir).mkdir(parents=True, exist_ok=True)                            
                                     new_train_file = os.path.join(
                                         temp_dir, "logs_training.csv"
                                     )
@@ -232,7 +232,7 @@ if __name__ == "__main__":
                                         new_train_file, get_new_header("train")
                                     )
                                     replace_per_label_metrics(
-                                        new_valid_file, temp_dir, get_new_header("valid")
+                                        new_valid_file, get_new_header("valid")
                                     )
                                     ### replace the per_label metric header information to ensure correct parsing - change as needed
                                     ## sort by loss
