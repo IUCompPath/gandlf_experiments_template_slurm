@@ -12,7 +12,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog="GANDLF_Experiment_Submitter_Scratch_Space_Handler",
         formatter_class=argparse.RawTextHelpFormatter,
-        description="Submit GaNDLF experiments on CUBIC Cluster.\n\n"
+        description="Submit GaNDLF experiments on IU Cluster (Big Red, Carbonite).\n\n"
         + copyrightMessage,
     )
 
