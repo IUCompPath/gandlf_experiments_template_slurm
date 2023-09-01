@@ -1,14 +1,15 @@
 # GaNDLF Experiments Template
 
-This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the UPenn CUBIC cluster.
+This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the SLURM scheduler for IU clusters (Big Red, Carbonite).
 
 ## Pre-requisites
 
-- This repo will allow you to submit **multiple** GPU jobs on the cluster, which gives you great power; and you know [what comes with that](https://memegenerator.net/img/instances/10306177/with-great-power-comes-great-responsibility-albus-dumbledore.jpg). If Mark's wrath falls upon you, you are on your own.
+- This repo will allow you to submit **multiple** GPU jobs on the cluster, which gives you great power; and you know [what comes with that](https://memegenerator.net/img/instances/10306177/with-great-power-comes-great-responsibility-albus-dumbledore.jpg). If [CIB's](https://uits.iu.edu/about/facilities/cib/index.html) wrath falls upon you, you are on your own.
+- Read up on how to submit batch jobs for GPU in [SLURM](https://kb.iu.edu/d/avjk#batch).
 - Be intimately familiar with the data you are going to use.
 - Be familiar with [GaNDLF's usage](https://cbica.github.io/GaNDLF/usage), and try to do a single epoch training on [the toy dataset](https://cbica.github.io/GaNDLF/usage#examples).
 - You have [installed GaNDLF](https://cbica.github.io/GaNDLF/setup) on your home directory or comp_space.
-- You have run a single epoch of the GaNDLF training loop (training and validation) using your own data _somewhere_ (either CUBIC cluster or own machine - doesn't matter), so that you know how to [customize the configuration](https://cbica.github.io/GaNDLF/usage#customize-the-training).
+- You have run a single epoch of the GaNDLF training loop (training and validation) using your own data _somewhere_ (either via an [interactive node](https://kb.iu.edu/d/avjk#interactive) or own machine - doesn't matter), so that you know how to [customize the configuration](https://cbica.github.io/GaNDLF/usage#customize-the-training).
 
 ## Configurations
 
@@ -54,18 +55,18 @@ experiment_template_folder
 python config_generator.py
 ```
 
-### Submitting Jobs to the CUBIC Cluster
+### Submitting Jobs to the IU Cluster (Big Red, Carbonite)
 
 ```bash
 python submitter.py -h
 usage: GANDLF_Experiment_Submitter [-h] [-i] [-g] [-d] [-f] [-r] [-e] [-gpu] [-gpur]
 
-Submit GaNDLF experiments on CUBIC Cluster.
+Submit GaNDLF experiments on the IU cluster (Big Red, Carbonite)
 
-Contact: software@cbica.upenn.edu
+Contact: patis@iu.edu
 
 This program is NOT FDA/CE approved and NOT intended for clinical use.
-Copyright (c) 2023 University of Pennsylvania. All rights reserved.
+Copyright (c) 2023 Indiana University. All rights reserved.
 
 optional arguments:
   -h, --help            show this help message and exit
