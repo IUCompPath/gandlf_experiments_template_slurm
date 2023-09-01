@@ -7,7 +7,7 @@ if __name__ == "__main__":
         "Contact: patis@iu.edu\n\n"
         + "This program is NOT FDA/CE approved and NOT intended for clinical use.\nCopyright (c) "
         + str(date.today().year)
-        + " University of Pennsylvania. All rights reserved."
+        + " Indiana University. All rights reserved."
     )
     parser = argparse.ArgumentParser(
         prog="GANDLF_Experiment_Submitter_Scratch_Space_Handler",

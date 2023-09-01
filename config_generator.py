@@ -31,7 +31,7 @@ if __name__ == "__main__":
         "Contact: patis@iu.edu\n\n"
         + "This program is NOT FDA/CE approved and NOT intended for clinical use.\nCopyright (c) "
         + str(date.today().year)
-        + " University of Pennsylvania. All rights reserved."
+        + " Indiana University. All rights reserved."
     )
 
     cwd = Path(__file__).resolve().parent
