@@ -1,3 +1,23 @@
+#!/bin/bash
+
+#SBATCH -J job_name
+#SBATCH -p gpu
+#SBATCH -A slurm-account-name
+#SBATCH -o filename_%j.txt
+#SBATCH -e filename_%j.err
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=username@iu.edu
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --gpus-per-node=1
+#SBATCH --time=02:00:00
+
+#Load any modules that your program needs
+module load python/gpu/x.x.x ## check this
+
+#Run your program
+srun ./my_program my_program_arguments
+
 #! /bin/bash
 #$ -l h_vmem=100G ## amout RAM being requested
 ##$ -l gpu # request the more common P100 nodes
@@ -25,13 +45,13 @@ echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
 #     exit 99
 # fi
 
-$1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
+# $1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
 
-# ## run actual trainer
-# $1 $2 \
-# --inputdata $3 \
-# --config $4 \
-# --modeldir $5 \
-# --train True \
-# --device cuda \
-# --reset True # this removes previously saved checkpoints and data
+
+$1 \  # python int
+$2 \  # gandlf_run
+--inputdata $3 \  # data.csv
+--config $4 \  # yaml config
+--modeldir $5 \  # output_dir
+--train True --device cuda \  # train on cuda
+--reset True # this removes previously saved checkpoints and data
