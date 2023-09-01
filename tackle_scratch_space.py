@@ -4,7 +4,7 @@ from distutils.dir_util import copy_tree
 
 if __name__ == "__main__":
     copyrightMessage = (
-        "Contact: software@cbica.upenn.edu\n\n"
+        "Contact: patis@iu.edu\n\n"
         + "This program is NOT FDA/CE approved and NOT intended for clinical use.\nCopyright (c) "
         + str(date.today().year)
         + " University of Pennsylvania. All rights reserved."

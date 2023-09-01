@@ -28,7 +28,7 @@ def detect_per_label_metrics(filename):
 
 if __name__ == "__main__":
     copyrightMessage = (
-        "Contact: software@cbica.upenn.edu\n\n"
+        "Contact: patis@iu.edu\n\n"
         + "This program is NOT FDA/CE approved and NOT intended for clinical use.\nCopyright (c) "
         + str(date.today().year)
         + " University of Pennsylvania. All rights reserved."
@@ -170,7 +170,7 @@ if __name__ == "__main__":
                                 # ensure something other than the log headers have been written
                                 if len_logs_training > 2 and len_logs_validation > 2:
                                     temp_dir = tempfile.gettempdir()
-                                    Path(temp_dir).mkdir(parents=True, exist_ok=True)                            
+                                    Path(temp_dir).mkdir(parents=True, exist_ok=True)
                                     new_train_file = os.path.join(
                                         temp_dir, "logs_training.csv"
                                     )
@@ -214,6 +214,7 @@ if __name__ == "__main__":
                                                     + ","
                                                 )
                                         return return_string
+
                                     def replace_per_label_metrics(filename, new_header):
                                         for line in fileinput.input(
                                             filename, inplace=True
