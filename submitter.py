@@ -55,7 +55,7 @@ if __name__ == "__main__":
         metavar="",
         default=None,
         type=str,
-        help="Full path to the data folder to copy into the location in '$CBICA_TMP'.",
+        help="Full path to the data folder to copy into the location in '/N/scratch/$username'.",
     )
     parser.add_argument(
         "-r",
@@ -66,28 +66,20 @@ if __name__ == "__main__":
         help="'runner.sh' script to be called.",
     )
     parser.add_argument(
+        "-a",
+        "--account",
+        metavar="",
+        default="user",
+        type=str,
+        help="IU account name.",
+    )
+    parser.add_argument(
         "-e",
         "--email",
         metavar="",
         default="user -at- site.domain",
         type=str,
         help="Email address to be used for notifications.",
-    )
-    parser.add_argument(
-        "-gpu",
-        "--gputype",
-        metavar="",
-        default="gpu",
-        type=str,
-        help="The parameter to pass after '-l' to the submit command.",
-    )
-    parser.add_argument(
-        "-gpur",
-        "--gpuratio",
-        metavar="",
-        default=4,
-        type=int,
-        help="The number of jobs (starting from '0') to send to 'gpu' vs 'A40', since 'gpu' is more prevalent - ignores parameter `--gputype`.",
     )
 
     args = parser.parse_args()
@@ -137,24 +129,15 @@ if __name__ == "__main__":
                             shutil.rmtree(output_dir)
                             Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-                            ## since A40 is less available than gpu, we will use gpu for 3 out of 4 jobs - change as needed
-                            if isinstance(args.gpuratio, int):
-                                modified_gpu = "gpu"
-                                if counter == args.gpuratio:
-                                    modified_gpu = "A40"
-                                    counter = -1
-                            else:
-                                modified_gpu = args.gputype
+                            experiment_name = file_or_folder + "_" + config
 
                             command = (
-                                "qsub -N L_"
-                                + file_or_folder
-                                + "_"
-                                + config
-                                + " -M "
+                                "sbatch -J "
+                                + experiment_name
+                                + " -A "
+                                + args.account
+                                + " --mail-user="
                                 + args.email
-                                + " -l "
-                                + modified_gpu
                                 + " "
                                 + args.runnerscript
                                 + " "
