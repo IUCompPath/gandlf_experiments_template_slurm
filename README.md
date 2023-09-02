@@ -59,9 +59,9 @@ python config_generator.py
 
 ```bash
 python submitter.py -h
-usage: GANDLF_Experiment_Submitter [-h] [-i] [-g] [-d] [-f] [-r] [-e] [-gpu] [-gpur]
+usage: GANDLF_Experiment_Submitter [-h] [-i] [-g] [-d] [-f] [-r] [-a] [-e]
 
-Submit GaNDLF experiments on the IU cluster (Big Red, Carbonate)
+Submit GaNDLF experiments on IU Cluster (Big Red, Carbonate).
 
 Contact: patis@iu.edu
 
@@ -72,12 +72,11 @@ optional arguments:
   -h, --help            show this help message and exit
   -i , --interpreter    Full path of python interpreter to be called.
   -g , --gandlfrun      Full path of 'gandlf_run' script to be called.
-  -d , --datafile       Full path to 'data.csv'.
-  -f , --foldertocopy   Full path to the data folder to copy into the location in '$CBICA_TMP'.
+  -d , --datafile       Full path to 'data.csv'. This can be comma-separated for specific train/val/test files.
+  -f , --foldertocopy   Full path to the data folder to copy into the location in '/N/scratch/$username'.
   -r , --runnerscript   'runner.sh' script to be called.
+  -a , --account        IU account name.
   -e , --email          Email address to be used for notifications.
-  -gpu , --gputype      The parameter to pass after '-l' to the submit command.
-  -gpur , --gpuratio    The number of jobs (starting from '0') to send to 'gpu' vs 'A40', since 'gpu' is more prevalent - ignores parameter `--gputype`.
 ```
 
 ### Getting overall statistics
