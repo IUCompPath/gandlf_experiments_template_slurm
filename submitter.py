@@ -103,11 +103,11 @@ if __name__ == "__main__":
     all_files_and_folders.sort()
     jobs_that_have_run, jobs_that_have_not_run = 0, 0
     # iterate over all the folders
-    for file_or_folder in all_files_and_folders:
-        current_file_or_folder = os.path.join(cwd, file_or_folder)
+    for base_experiment_folder in all_files_and_folders:
+        current_file_or_folder = os.path.join(cwd, base_experiment_folder)
         if os.path.isdir(current_file_or_folder):
-            if file_or_folder != ".git":
-                print("*****Folder:", file_or_folder)
+            if base_experiment_folder != ".git":
+                print("*****Folder:", base_experiment_folder)
                 # change cwd so that logs are generated in single place
                 os.chdir(current_file_or_folder)
                 files_and_folders_inside = os.listdir(current_file_or_folder)
@@ -148,7 +148,7 @@ if __name__ == "__main__":
                             shutil.rmtree(output_dir)
                             Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-                            experiment_name = file_or_folder + "_" + config
+                            experiment_name = base_experiment_folder + "_" + config
 
                             command = (
                                 "sbatch -J "
@@ -174,6 +174,10 @@ if __name__ == "__main__":
                             )
                             print(command)
                             os.system(command)
+                            ## todo: some improvements for experiment tracking
+                            # might be a good idea to check the return of the os.system call (which should be the job ID)
+                            # put that in a variable
+                            # to enable better tracking, construct a csv using experiment_name,job_id,command
                             jobs_that_have_not_run += 1
                         else:
                             jobs_that_have_run += 1
