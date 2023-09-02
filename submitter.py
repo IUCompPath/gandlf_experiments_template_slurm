@@ -1,7 +1,7 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, shutil, argparse
+import os, shutil, argparse, yaml
 from datetime import date
 from pathlib import Path
 
@@ -84,9 +84,22 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    def _number_of_rows_in_csv(filename: str) -> int:
+        """
+        This is a helper function to count the number of lines in a file
+
+        Args:
+            filename (str): Path to the file
+
+        Returns:
+            int: Number of lines in the file
+        """
+        with open(filename) as f:
+            return sum(1 for line in f)
+
     all_files_and_folders.sort()
-    counter = 0  # used to change the gpu type for submission
     jobs_that_have_run, jobs_that_have_not_run = 0, 0
+    # iterate over all the folders
     for file_or_folder in all_files_and_folders:
         current_file_or_folder = os.path.join(cwd, file_or_folder)
         if os.path.isdir(current_file_or_folder):
@@ -105,24 +118,27 @@ if __name__ == "__main__":
                         current_config = os.path.join(
                             current_file_or_folder, internal_file_or_folder
                         )
+                        # get the config name
                         config, _ = os.path.splitext(internal_file_or_folder)
+                        # automatically set the output directory
                         output_dir = os.path.join(current_file_or_folder, config)
                         Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+                        parameters = yaml.safe_load(open(current_config, "r"))
+
+                        # check if the experiment has already run by checking if at least the number of epochs have been run is greater than the patience set in the config
+                        # there are other ways to structure this, but this is the simplest
                         need_to_run = True
                         if os.path.isdir(output_dir):
-                            files_in_output_dir = os.listdir(output_dir)
-                            files_in_output_dir.sort()
-                            for output_files in files_in_output_dir:
-                                if output_files.endswith("_best.pth.tar"):
+                            validation_logs_file = os.path.join(
+                                output_dir, "logs_validation.csv"
+                            )
+                            if os.path.isfile(validation_logs_file):
+                                if (
+                                    _number_of_rows_in_csv(validation_logs_file)
+                                    > parameters["patience"]
+                                ):
                                     need_to_run = False
-                                    break
-                        # # delete previous results and logs
-                        # if os.path.isdir(output_dir):
-                        #     shutil.rmtree(output_dir)
-                        # Path(output_dir).mkdir(parents=True, exist_ok=True)
-
-                        # this can be used to only submit those experiments that have not generated results
-                        # condition = not os.path.isfile(os.path.join(output_dir, "logs_validation.csv")) or not os.path.isfile(os.path.join(output_dir, "logs_training.csv"))
 
                         # if previous results are absent, delete and re-launch
                         if need_to_run:
@@ -155,7 +171,6 @@ if __name__ == "__main__":
                             )
                             print(command)
                             os.system(command)
-                            counter += 1
                             jobs_that_have_not_run += 1
                         else:
                             jobs_that_have_run += 1
