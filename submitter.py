@@ -94,8 +94,11 @@ if __name__ == "__main__":
         Returns:
             int: Number of lines in the file
         """
-        with open(filename) as f:
-            return sum(1 for line in f)
+        if os.path.isfile(filename):
+            with open(filename) as f:
+                return sum(1 for line in f)
+        else:
+            return 0
 
     all_files_and_folders.sort()
     jobs_that_have_run, jobs_that_have_not_run = 0, 0
@@ -130,15 +133,15 @@ if __name__ == "__main__":
                         # there are other ways to structure this, but this is the simplest
                         need_to_run = True
                         if os.path.isdir(output_dir):
+                            # this is the expected validation logs
                             validation_logs_file = os.path.join(
                                 output_dir, "logs_validation.csv"
                             )
-                            if os.path.isfile(validation_logs_file):
-                                if (
-                                    _number_of_rows_in_csv(validation_logs_file)
-                                    > parameters["patience"]
-                                ):
-                                    need_to_run = False
+                            if (
+                                _number_of_rows_in_csv(validation_logs_file)
+                                >= parameters["patience"]
+                            ):
+                                need_to_run = False
 
                         # if previous results are absent, delete and re-launch
                         if need_to_run:
