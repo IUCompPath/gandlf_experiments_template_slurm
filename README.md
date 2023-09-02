@@ -16,14 +16,19 @@ This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA
 All configuration options can be changed depending on the experiment at hand. 
 
 - In the file [`config_generator.py`](./config_generator.py), there are examples using which the various hyper-parameters can be altered to create different configurations. 
-- Maximum flexibility is given to the user to decide the folder and configuration file structure. 
+- Maximum flexibility is given to the user to decide the base experiment folder (i.e., which hyper-parameter to choose to create folders from) and configuration file structure. 
 - It is suggested that the user alters few hyper-parameters while keeping the rest consistent. This allows meaningful comparisons between different experiments.
 - This repo allows the creation of such an extensive experimental design.
-- The **only** requirement is that the configurations should be generated under a single folder structure. An example of such a structure exploring 2 different architectures for learning rates of `[0.1,0.01]` with optimizers of `[adam,sgd]` is shown:
+- Requirements:  
+  - A baseline config has been identified.
+  - The configurations should be generated under a single folder structure. An example of such a structure exploring 2 different architectures for learning rates of `[0.1,0.01]` with optimizers of `[adam,sgd]` is shown:
 ```
 experiment_template_folder
 │
 | README.md
+|
+| config.yaml
+|
 └───unet
 │   │
 │   | lr_0.1_adam.yaml
