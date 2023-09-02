@@ -178,9 +178,10 @@ if __name__ == "__main__":
                             # might be a good idea to check the return of the os.system call (which should be the job ID)
                             # put that in a variable
                             # to enable better tracking, construct a csv using experiment_name,job_id,command
-                            jobs_that_have_not_run += 1
-                        else:
                             jobs_that_have_run += 1
+                        else:
+                            jobs_that_have_not_run += 1
 
-    print("Jobs that have run:", jobs_that_have_run)
-    print("Jobs that have not run:", jobs_that_have_not_run)
+    print(
+        f"Submitted jobs:{jobs_that_have_run}; not submitted jobs:{jobs_that_have_not_run}"
+    )
