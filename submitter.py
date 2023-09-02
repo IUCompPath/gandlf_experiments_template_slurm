@@ -47,7 +47,7 @@ if __name__ == "__main__":
         metavar="",
         default=os.path.join(cwd, "data.csv"),
         type=str,
-        help="Full path to 'data.csv'.",
+        help="Full path to 'data.csv'. This can be comma-separated for specific train/val/test files.",
     )
     parser.add_argument(
         "-f",
