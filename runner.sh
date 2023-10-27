@@ -13,15 +13,26 @@
 ###SBATCH --time=02:00:00
 
 #Load any modules that your program needs
-module load python/gpu/x.x.x ## check this
+module load python/gpu/3.10.10
 
+echo $SLURM_JOB_NODELIST
+echo $SLURM_JOB_NUM_NODES
+echo $SLURM_TASKS_PER_NODE
+echo $SLURM_GPUS
+
+nvidia-smi -L
+
+### print out some useful execute node information
+numcpu=`grep -c processor /proc/cpuinfo`
+echo "Number of CPUs: $numcpu"
+mem_ask=`grep MemTotal /proc/meminfo`
+echo $mem_ask
+
+### Are the GPUs there? This tells you what type of GPUs are present
+echo "GPUs located:"
+lspci | grep NVIDIA
 echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
 
-# if [ $CUDA_VISIBLE_DEVICES != 0 ] ; then
-#     # Exit with status 99, which tells the scheduler to resubmit the job
-#     # https://cbica-portal.uphs.upenn.edu/rt/Ticket/Display.html?id=6194 
-#     exit 99
-# fi
 
 # $1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
 
