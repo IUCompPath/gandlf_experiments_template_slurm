@@ -26,7 +26,7 @@ echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
 # $1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
 
 
-$1 \  # python int
+$1 \  # python interpreter
 $2 \  # gandlf_run
 --inputdata $3 \  # data.csv
 --config $4 \  # yaml config
