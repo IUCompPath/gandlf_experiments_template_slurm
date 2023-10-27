@@ -29,7 +29,7 @@ if __name__ == "__main__":
         "-i",
         "--interpreter",
         metavar="",
-        default="/cbica/comp_space/patis/testing/gandlf_mine/venv/bin/python",
+        default="/N/u/patis/BigRed200/projects/gandlf_mine/venv/bin/python",
         type=str,
         help="Full path of python interpreter to be called.",
     )
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         "-g",
         "--gandlfrun",
         metavar="",
-        default="/cbica/home/patis/comp_space/testing/gandlf_mine/gandlf_run",
+        default="/N/u/patis/BigRed200/projects/gandlf_mine/gandlf_run",
         type=str,
         help="Full path of 'gandlf_run' script to be called.",
     )
