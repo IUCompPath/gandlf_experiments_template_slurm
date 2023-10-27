@@ -157,6 +157,10 @@ if __name__ == "__main__":
                                 + args.account
                                 + " --mail-user="
                                 + args.email
+                                + " -e "
+                                + output_dir + "/" + experiment_name + ".err"
+                                + " -o "
+                                + output_dir + "/" + experiment_name + ".out"
                                 + " "
                                 + args.runnerscript
                                 + " "
