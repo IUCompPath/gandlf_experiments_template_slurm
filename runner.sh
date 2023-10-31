@@ -1,16 +1,13 @@
 #!/bin/bash
 
-###SBATCH -J job_name
 #SBATCH -p gpu
-###SBATCH -A slurm-account-name
-#SBATCH -o filename_%j.txt
-#SBATCH -e filename_%j.err
+#SBATCH -A r00362
 #SBATCH --mail-type=ALL
-###SBATCH --mail-user=username@iu.edu
 #SBATCH --nodes=1
+#SBATCH --cpus-per-task=10
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=1
-###SBATCH --time=02:00:00
+#SBATCH --time=48:00:00
 
 #Load any modules that your program needs
 module load python/gpu/3.10.10
@@ -33,14 +30,25 @@ echo "GPUs located:"
 lspci | grep NVIDIA
 echo "CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
 
+echo "1: $1"
+echo "2: $2"
+echo "3: $3"
+echo "4: $4"
+echo "5: $5"
+
+command_to_run="$1 $2 --inputdata $3 --config $4 --modeldir $5 --train True --device cuda --reset True"
+
+echo "command_to_run: $command_to_run"
+
+$command_to_run
 
 # $1 ../tackle_scratch_space.py -g $2 -d $3 -c $4 -o $5 -f $6
 
 
-$1 \  # python interpreter
-$2 \  # gandlf_run
---inputdata $3 \  # data.csv
---config $4 \  # yaml config
---modeldir $5 \  # output_dir
---train True --device cuda \  # train on cuda
---reset True # this removes previously saved checkpoints and data
+# $1 \  # python interpreter
+# $2 \  # gandlf_run
+# --inputdata $3 \  # data.csv
+# --config $4 \  # yaml config
+# --modeldir $5 \  # output_dir
+# --train True --device cuda \  # train on cuda
+# --reset True # this removes previously saved checkpoints and data
