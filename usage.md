@@ -62,3 +62,16 @@ True
 `~/projects/gandlf_mine/venv/bin/python -c "import torch as t;print(t.__version__);print(t.cuda.is_available())"`
 1.13.1+cu116
 True
+
+## Submitting a job
+
+`python submitter.py`
+*****Folder: adam
+sbatch -J adam_flexinet_dpn107_cosineannealing_0.0001 --mail-user=patis@iu.edu -e /geode2/home/u070/patis/BigRed200/projects/gandlf_mine/exp_rano/adam/flexinet_dpn107_cosineannealing_0.0001/adam_flexinet_dpn107_cosineannealing_0.0001.err -o /geode2/home/u070/patis/BigRed200/projects/gandlf_mine/exp_rano/adam/flexinet_dpn107_cosineannealing_0.0001/adam_flexinet_dpn107_cosineannealing_0.0001.out /geode2/home/u070/patis/BigRed200/projects/gandlf_mine/exp_rano/runner_iu.sh /N/u/patis/BigRed200/projects/gandlf_mine/venv/bin/python /N/u/patis/BigRed200/projects/gandlf_mine/gandlf_run /geode2/home/u070/patis/BigRed200/projects/gandlf_mine/exp_rano/train.csv,/geode2/home/u070/patis/BigRed200/projects/gandlf_mine/exp_rano/valid.csv /geode2/home/u070/patis/BigRed200/projects/gandlf_mine/exp_rano/adam/flexinet_dpn107_cosineannealing_0.0001.yaml /geode2/home/u070/patis/BigRed200/projects/gandlf_mine/exp_rano/adam/flexinet_dpn107_cosineannealing_0.0001 None
+Submitted batch job 2071083
+
+## Checking the status of a job
+
+`squeue -u patis`
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           2071083       gpu adam_fle    patis PD       0:00      1 (Priority)
