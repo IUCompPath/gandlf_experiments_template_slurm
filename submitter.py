@@ -69,7 +69,7 @@ if __name__ == "__main__":
         "-a",
         "--account",
         metavar="",
-        default="a00123", ## you can this information using "sacctmgr show assoc | grep $username"
+        default="a00123", ## you can this information using "sacctmgr show assoc | grep `whoami`"
         type=str,
         help="IU account name.",
     )
