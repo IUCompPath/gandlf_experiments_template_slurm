@@ -69,7 +69,7 @@ if __name__ == "__main__":
         "-a",
         "--account",
         metavar="",
-        default="a00123", ## you can this information using "sacctmgr show assoc | grep `whoami`"
+        default="a00123",  ## you can this information using "sacctmgr show assoc | grep `whoami`"
         type=str,
         help="IU account name.",
     )
@@ -158,10 +158,10 @@ if __name__ == "__main__":
                                 + " --mail-user="
                                 + args.email
                                 + " -e "
-                                + output_dir + "/" + experiment_name + ".err"
-                                + " -o "
-                                + output_dir + "/" + experiment_name + ".out"
-                                + " "
+                                + output_dir
+                                + "/%j.err -o "
+                                + output_dir
+                                + "/%j.out "
                                 + args.runnerscript
                                 + " "
                                 + args.interpreter
