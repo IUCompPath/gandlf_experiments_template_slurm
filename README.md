@@ -1,4 +1,4 @@
-# GaNDLF Experiments Template
+# GaNDLF Experiments Template - KEEP ALL DOWNSTREAM REPOS _PRIVATE_ !!!
 
 This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the SLURM scheduler for IU clusters (Big Red, Carbonate).
 
