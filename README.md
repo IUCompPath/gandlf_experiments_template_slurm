@@ -2,6 +2,8 @@
 
 This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the SLURM scheduler for IU clusters (Big Red, Carbonate).
 
+Please contribute back to this repo to increase everyone's efficacy. 
+
 ## Pre-requisites
 
 - This repo will allow you to submit **multiple** GPU jobs on the cluster, which gives you great power; and you know [what comes with that](https://memegenerator.net/img/instances/10306177/with-great-power-comes-great-responsibility-albus-dumbledore.jpg). If [CIB's](https://uits.iu.edu/about/facilities/cib/index.html) wrath falls upon you, you are on your own.
