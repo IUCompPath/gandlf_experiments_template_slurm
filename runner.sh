@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #SBATCH -p gpu
-#SBATCH -A r00362
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=10
