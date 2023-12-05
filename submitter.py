@@ -69,7 +69,7 @@ if __name__ == "__main__":
         "-a",
         "--account",
         metavar="",
-        default="a00123",  ## you can this information using "sacctmgr show assoc | grep `whoami`"
+        default="a00123",  ## IU-SPECIFIC: you can this information using "sacctmgr show assoc | grep `whoami`" or from the specific projects on https://projects.rt.iu.edu/project
         type=str,
         help="IU account name.",
     )
