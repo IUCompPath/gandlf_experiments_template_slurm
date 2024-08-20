@@ -33,9 +33,10 @@ echo "1: $1"
 echo "2: $2"
 echo "3: $3"
 echo "4: $4"
-echo "5: $5"
+# echo "5: $5" ## old_way: https://github.com/mlcommons/GaNDLF/pull/845
 
-command_to_run="$1 $2 --inputdata $3 --config $4 --modeldir $5 --train True --device cuda --reset True"
+# command_to_run="$1 $2 --inputdata $3 --config $4 --modeldir $5 --train True --device cuda --reset True" ## old_way
+command_to_run="$1 --inputdata $3 --config $4 --modeldir $5 --train True --device cuda --reset True"
 
 echo "command_to_run: $command_to_run"
 

@@ -29,7 +29,7 @@ if __name__ == "__main__":
         "-i",
         "--interpreter",
         metavar="",
-        default="/N/u/patis/BigRed200/projects/gandlf_mine/venv/bin/python",
+        default="/N/u/patis/Quartz/projects/gandlf_mine_dp/venv/bin/gandlf_run",
         type=str,
         help="Full path of python interpreter to be called.",
     )
@@ -37,7 +37,8 @@ if __name__ == "__main__":
         "-g",
         "--gandlfrun",
         metavar="",
-        default="/N/u/patis/BigRed200/projects/gandlf_mine/gandlf_run",
+        # default="/N/u/patis/BigRed200/projects/gandlf_mine/gandlf_run", ## old way: https://github.com/mlcommons/GaNDLF/pull/845
+        default=" ",
         type=str,
         help="Full path of 'gandlf_run' script to be called.",
     )
@@ -83,6 +84,13 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+
+    # checks for the arguments
+    assert args.account is not None, "Please provide an account name."
+    assert args.account is not "a00123", "Please provide a valid account name."
+    assert args.email is not None, "Please provide an email address."
+    assert args.datafile is not None, "Please provide a data file."
+    assert args.runnerscript is not None, "Please provide a runner script."
 
     def _number_of_rows_in_csv(filename: str) -> int:
         """
@@ -166,7 +174,7 @@ if __name__ == "__main__":
                                 + " "
                                 + args.interpreter
                                 + " "
-                                + args.gandlfrun
+                                + args.gandlfrun  ## old way: this is no longer needed and will be removed in the future
                                 + " "
                                 + args.datafile
                                 + " "
