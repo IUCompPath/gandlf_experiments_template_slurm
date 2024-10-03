@@ -86,11 +86,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # checks for the arguments
-    assert args.account is not None, "Please provide an account name."
-    assert args.account is not "a00123", "Please provide a valid account name."
-    assert args.email is not None, "Please provide an email address."
-    assert args.datafile is not None, "Please provide a data file."
-    assert args.runnerscript is not None, "Please provide a runner script."
+    assert args.account != None, "Please provide an account name."
+    assert "a00123" in args.account, "Please provide a valid account name."
+    assert args.email != None, "Please provide an email address."
+    assert (
+        args.email != "user -at- site.domain"
+    ), "Please provide a valid email address."
+    assert args.datafile != None, "Please provide a data file."
+    assert args.runnerscript != None, "Please provide a runner script."
 
     def _number_of_rows_in_csv(filename: str) -> int:
         """
