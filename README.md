@@ -1,6 +1,6 @@
 # GaNDLF Experiments Template - KEEP ALL DOWNSTREAM REPOS _PRIVATE_ !!!
 
-This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the SLURM scheduler for IU clusters (Big Red, Carbonate).
+This repo contains a mechanism to run multiple [GaNDLF](https://github.com/CBICA/GaNDLF) experiments on the SLURM scheduler for IU clusters (Big Red, Quartz).
 
 Please contribute back to this repo to increase everyone's efficacy. 
 
@@ -62,13 +62,13 @@ experiment_template_folder
 python config_generator.py
 ```
 
-### Submitting Jobs to the IU Cluster (Big Red, Carbonate)
+### Submitting Jobs to the IU Cluster (Big Red, Quartz)
 
 ```bash
 python submitter.py -h
 usage: GANDLF_Experiment_Submitter [-h] [-i] [-g] [-d] [-f] [-r] [-a] [-e]
 
-Submit GaNDLF experiments on IU Cluster (Big Red, Carbonate).
+Submit GaNDLF experiments on IU Cluster (Big Red, Quartz).
 
 Contact: patis@iu.edu
 
