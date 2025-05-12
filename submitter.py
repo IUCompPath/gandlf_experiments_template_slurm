@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     # checks for the arguments
     assert args.account != None, "Please provide an account name."
-    assert "a00123" in args.account, "Please provide a valid account name."
+    assert args.account != "a00123", "Please provide a valid account name."
     assert args.email != None, "Please provide an email address."
     assert (
         args.email != "user -at- site.domain"
